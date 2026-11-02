@@ -1,0 +1,3 @@
+2025-11-19T14:10:56+01:00 - send_payment db_errors: ["exception: Unknown column 'balance_before' in 'field list'"]
+2025-11-19T14:23:23+01:00 - send_payment db_errors: ["exception: Unknown column 'balance_before' in 'field list'"]
+2025-11-19T14:25:34+01:00 - send_payment db_errors: ["exception: Unknown column 'balance_before' in 'field list'"]

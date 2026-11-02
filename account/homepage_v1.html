@@ -1,0 +1,1170 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaySecure - Dashboard</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="homepage_v1.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</head>
+<body>
+    <!-- Header with PaySecure logo, search, and profile -->
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-lock" style="color: #1d9bf0 !important;"></i>
+            <span class="pay">pay</span><span class="secure">secure</span>
+        </div>
+        
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search payments, contacts..." oninput="performSearch()">
+            <i class="fas fa-search search-icon"></i>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+        
+        <div class="profile-section">
+            <div class="notifications">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </div>
+            
+            <div class="profile-btn" onclick="toggleProfileMenu()">
+                <div class="profile-avatar">U</div>
+                <div class="profile-info">
+                    <span class="profile-name">User</span>
+                    <span class="profile-subtitle">Welcome back</span>
+                </div>
+                <i class="fas fa-chevron-down profile-arrow"></i>
+            </div>
+            
+            <!-- Profile Dropdown Menu -->
+            <div class="profile-menu" id="profileMenu">
+                <div class="menu-item" onclick="viewProfile()">
+                    <i class="fas fa-user"></i>
+                    <span>My Profile</span>
+                </div>
+                <div class="menu-item" onclick="viewTransactions()">
+                    <i class="fas fa-history"></i>
+                    <span>Transaction History</span>
+                </div>
+                <div class="menu-item" onclick="viewSettings()">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+                <div class="menu-item" onclick="logout()" style="color: #f44336;">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container: Left content + Right sidebar -->
+    <div class="main-container">
+        <!-- Left Side: Main Content -->
+        <div class="left-content">
+            <!-- Balance Card -->
+            <div class="balance-section">
+                <div class="balance-card">
+                    <div class="balance-header">
+                        <h3>Current Balance</h3>
+                        <i class="fas fa-eye" id="balanceToggle" onclick="toggleBalance()"></i>
+                    </div>
+                    <div class="balance-amount" id="balanceAmount">₹12,450.00</div>
+                    <div class="balance-subtitle">Available balance</div>
+                    
+                    <div class="balance-actions">
+                        <button class="balance-btn add-money" onclick="addMoney()">
+                            <i class="fas fa-plus"></i>
+                            Add Money
+                        </button>
+                        <button class="balance-btn withdraw" onclick="withdrawMoney()">
+                            <i class="fas fa-minus"></i>
+                            Withdraw
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions Grid (Box Cards) -->
+            <div class="quick-actions">
+                <h2>Quick Actions</h2>
+                
+                <!-- First Row: 4 boxes -->
+                <div class="action-row first-row">
+                    <div class="action-card" onclick="scanQR()">
+                        <div class="card-icon scan-qr-bg">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <h3>Scan QR</h3>
+                        <p>Quick payment</p>
+                    </div>
+                    
+                    <div class="action-card" onclick="mobileRecharge()">
+                        <div class="card-icon recharge-bg">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Recharge</h3>
+                        <p>Mobile & DTH</p>
+                    </div>
+                    
+                    <div class="action-card" onclick="payBills()">
+                        <div class="card-icon bills-bg">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <h3>Bills</h3>
+                        <p>Utilities</p>
+                    </div>
+                    
+                    <div class="action-card" onclick="addBankAccount()">
+                        <div class="card-icon add-bank-bg">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <h3>Add Bank</h3>
+                        <p>Link account</p>
+                    </div>
+                </div>
+                
+                <!-- Second Row: 2 boxes -->
+                <div class="action-row second-row">
+                    <div class="action-card" onclick="sendMoney()">
+                        <div class="card-icon send-money-bg">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                        <h3>Send Money</h3>
+                        <p>Transfer funds</p>
+                    </div>
+                    
+                    <div class="action-card" onclick="requestMoney()">
+                        <div class="card-icon request-money-bg">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <h3>Request</h3>
+                        <p>Ask for money</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Sidebar -->
+        <div class="sidebar">
+            <!-- Recent Activity Card -->
+            <div class="sidebar-card activity-card">
+                <div class="card-header">
+                    <h3>Recent Activity</h3>
+                    <a href="#" class="view-all-link">View All</a>
+                </div>
+                
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-profile">
+                            <div class="profile-pic money-received">J</div>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-title">Money Received</div>
+                            <div class="activity-subtitle">From John Doe</div>
+                            <div class="activity-time">2 hours ago</div>
+                        </div>
+                        <div class="activity-amount positive">+₹1,500</div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-profile">
+                            <div class="profile-pic payment-sent">A</div>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-title">Payment Sent</div>
+                            <div class="activity-subtitle">To Amazon</div>
+                            <div class="activity-time">5 hours ago</div>
+                        </div>
+                        <div class="activity-amount negative">-₹2,300</div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-profile">
+                            <div class="profile-pic bill-payment">E</div>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-title">Bill Payment</div>
+                            <div class="activity-subtitle">Electricity</div>
+                            <div class="activity-time">1 day ago</div>
+                        </div>
+                        <div class="activity-amount negative">-₹850</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Linked Banks Card -->
+            <div class="sidebar-card banks-card">
+                <div class="card-header">
+                    <h3>Linked Banks</h3>
+                    <a href="#" class="add-bank-link">Add Bank</a>
+                </div>
+                
+                <div class="bank-list">
+                    <div class="bank-item">
+                        <div class="bank-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="bank-details">
+                            <div class="bank-name">HDFC Bank</div>
+                            <div class="bank-account">**** **** **** 1234</div>
+                        </div>
+                        <div class="bank-status active">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="bank-item">
+                        <div class="bank-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="bank-details">
+                            <div class="bank-name">ICICI Bank</div>
+                            <div class="bank-account">**** **** **** 5678</div>
+                        </div>
+                        <div class="bank-status active">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="add-bank-box" onclick="addBankAccount()">
+                        <div class="add-bank-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="add-bank-text">
+                            <div class="add-bank-title">Add New Bank Account</div>
+                            <div class="add-bank-subtitle">Ask for payment</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const searchResults = document.getElementById('searchResults');
+            
+            if (searchTerm.length === 0) {
+                searchResults.style.display = 'none';
+                return;
+            }
+            
+            // Sample search data
+            const searchData = [
+                { type: 'contact', name: 'John Doe', subtitle: 'Contact', icon: 'fas fa-user' },
+                { type: 'contact', name: 'Sarah Smith', subtitle: 'Contact', icon: 'fas fa-user' },
+                { type: 'service', name: 'Mobile Recharge', subtitle: 'Service', icon: 'fas fa-mobile-alt' },
+                { type: 'service', name: 'Bill Payment', subtitle: 'Service', icon: 'fas fa-file-invoice' },
+                { type: 'transaction', name: 'Payment to Amazon', subtitle: 'Transaction', icon: 'fas fa-history' },
+                { type: 'transaction', name: 'Money from John', subtitle: 'Transaction', icon: 'fas fa-history' }
+            ];
+            
+            const filteredResults = searchData.filter(item => 
+                item.name.toLowerCase().includes(searchTerm)
+            );
+            
+            if (filteredResults.length > 0) {
+                searchResults.innerHTML = filteredResults.map(item => `
+                    <div class="search-result-item" onclick="selectSearchResult('${item.type}', '${item.name}')">
+                        <i class="${item.icon}"></i>
+                        <div class="result-details">
+                            <div class="result-name">${item.name}</div>
+                            <div class="result-subtitle">${item.subtitle}</div>
+                        </div>
+                    </div>
+                `).join('');
+                searchResults.style.display = 'block';
+            } else {
+                searchResults.innerHTML = '<div class="no-results">No results found</div>';
+                searchResults.style.display = 'block';
+            }
+        }
+        
+        function selectSearchResult(type, name) {
+            document.getElementById('searchInput').value = name;
+            document.getElementById('searchResults').style.display = 'none';
+            console.log('Selected:', type, name);
+        }
+        
+        // Profile menu toggle
+        function toggleProfileMenu() {
+            console.log('Profile menu toggle clicked!'); // Debug log
+            const menu = document.getElementById('profileMenu');
+            const profileBtn = document.querySelector('.profile-btn');
+            
+            if (menu && profileBtn) {
+                menu.classList.toggle('show');
+                profileBtn.classList.toggle('active');
+                console.log('Menu classes:', menu.classList.toString()); // Debug log
+            } else {
+                console.error('Profile menu or button not found!');
+            }
+        }
+        
+        // Close profile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const profileSection = document.querySelector('.profile-section');
+            const profileMenu = document.getElementById('profileMenu');
+            const profileBtn = document.querySelector('.profile-btn');
+            
+            if (!profileSection.contains(event.target)) {
+                profileMenu.classList.remove('show');
+                profileBtn.classList.remove('active');
+            }
+        });
+        
+        // Hide search results when clicking outside
+        document.addEventListener('click', function(event) {
+            const searchContainer = document.querySelector('.search-container');
+            const searchResults = document.getElementById('searchResults');
+            
+            if (!searchContainer.contains(event.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+        
+        // Balance toggle
+        function toggleBalance() {
+            const balanceAmount = document.getElementById('balanceAmount');
+            const toggleIcon = document.getElementById('balanceToggle');
+            
+            if (balanceAmount.textContent === '₹12,450.00') {
+                balanceAmount.textContent = '₹****.**';
+                toggleIcon.className = 'fas fa-eye-slash';
+            } else {
+                balanceAmount.textContent = '₹12,450.00';
+                toggleIcon.className = 'fas fa-eye';
+            }
+        }
+        
+        // Action functions
+        function scanQR() { 
+            window.location.href = 'scan_and_pay.html'; 
+        }
+        function mobileRecharge() { 
+            alert('Mobile Recharge functionality - Coming soon!'); 
+        }
+        function payBills() { 
+            window.location.href = 'bill_pay.html';
+        }
+        function addMoney() { 
+            alert('Add Money functionality - Coming soon!'); 
+        }
+        function withdrawMoney() { 
+            alert('Withdraw Money functionality - Coming soon!'); 
+        }
+        function addBankAccount() { 
+            alert('Add Bank Account functionality - Coming soon!'); 
+        }
+        
+        function sendMoney() { 
+            window.location.href = 'phone.html'; 
+        }
+        
+        function requestMoney() { 
+            alert('Request Money functionality - Coming soon!'); 
+        }
+        function viewProfile() { 
+            // Create profile modal
+            showProfileModal();
+            
+            // Generate QR code when profile modal opens
+            setTimeout(() => {
+                if (typeof QRCode !== 'undefined') {
+                    generateQRCode();
+                } else {
+                    console.log('Using fallback QR generation');
+                    generateQRCodeFallback();
+                }
+            }, 200);
+            
+            // Fallback after delay if still not loaded
+            setTimeout(() => {
+                const qrContainer = document.getElementById('userQRCode');
+                if (qrContainer && (!qrContainer.innerHTML || qrContainer.innerHTML.trim() === '')) {
+                    generateQRCodeFallback();
+                }
+            }, 1000);
+        }
+        
+        function viewTransactions() { 
+            // Redirect to transaction history page
+            window.location.href = 'transaction_history.html';
+        }
+        
+        function viewSettings() { 
+            // Create settings modal
+            showSettingsModal();
+        }
+        
+        function changePassword() {
+            // Close profile menu first
+            document.getElementById('profileMenu').classList.remove('show');
+            document.querySelector('.profile-btn').classList.remove('active');
+            
+            // Show change password modal
+            showChangePasswordModal();
+        }
+        
+        function changeUpiPin() {
+            // Close profile menu first
+            document.getElementById('profileMenu').classList.remove('show');
+            document.querySelector('.profile-btn').classList.remove('active');
+            
+            // Show change UPI PIN modal
+            showChangeUpiPinModal();
+        }
+        
+        function logout() { 
+            if(confirm('Are you sure you want to logout?')) {
+                // Clear session and redirect to login
+                sessionStorage.clear();
+                localStorage.clear();
+                window.location.href = 'login.html';
+            }
+        }
+        
+        // Profile Modal Function
+        function showProfileModal() {
+            const modal = document.createElement('div');
+            modal.className = 'profile-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>User Profile</h2>
+                        <span class="close-modal" onclick="closeModal()">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="profile-section-modal">
+                            <div class="profile-avatar-large">U</div>
+                            <h3>User Name</h3>
+                            <p>user@example.com</p>
+                        </div>
+                        <div class="profile-details">
+                            <div class="detail-item">
+                                <label>Phone Number:</label>
+                                <span>+91 98765 43210</span>
+                            </div>
+                            <div class="detail-item">
+                                <label>UPI ID:</label>
+                                <span class="upi-id">user@paysecure</span>
+                                <button class="copy-btn" onclick="copyUpiId()">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <div class="detail-item">
+                                <label>Account Type:</label>
+                                <span>Premium</span>
+                            </div>
+                            <div class="detail-item">
+                                <label>Member Since:</label>
+                                <span>January 2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <label>KYC Status:</label>
+                                <span class="verified">Verified ✓</span>
+                            </div>
+                        </div>
+                        
+                        <div class="qr-section">
+                            <h4>Your UPI QR Code</h4>
+                            <div class="qr-container">
+                                <div class="qr-code" id="userQRCode">
+                                    <!-- QR Code will be generated here -->
+                                </div>
+                                <div class="qr-actions">
+                                    <button class="qr-btn" onclick="downloadQR()">
+                                        <i class="fas fa-download"></i>
+                                        Download
+                                    </button>
+                                    <button class="qr-btn" onclick="shareQR()">
+                                        <i class="fas fa-share"></i>
+                                        Share
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="qr-note">Share this QR code with others to receive payments instantly</p>
+                        </div>
+                        <div class="profile-actions">
+                            <button class="btn-edit" onclick="editProfile()">Edit Profile</button>
+                            <button class="btn-security" onclick="showSecurity()">Security Settings</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        
+        // Settings Modal Function
+        function showSettingsModal() {
+            const modal = document.createElement('div');
+            modal.className = 'profile-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Settings</h2>
+                        <span class="close-modal" onclick="closeModal()">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="settings-section">
+                            <h3>Account Settings</h3>
+                            <div class="setting-item">
+                                <label>
+                                    <input type="checkbox" checked> Email Notifications
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label>
+                                    <input type="checkbox" checked> SMS Alerts
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label>
+                                    <input type="checkbox"> Push Notifications
+                                </label>
+                            </div>
+                        </div>
+                        <div class="settings-section">
+                            <h3>Security</h3>
+                            <div class="setting-item">
+                                <label>
+                                    <input type="checkbox" checked> Two-Factor Authentication
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label>
+                                    <input type="checkbox" checked> Biometric Login
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-section">
+                            <h3>Password & Security</h3>
+                            <div class="setting-action-item" onclick="changePasswordFromSettings()">
+                                <div class="setting-action-content">
+                                    <i class="fas fa-lock"></i>
+                                    <div class="setting-action-text">
+                                        <span class="action-title">Change Password</span>
+                                        <span class="action-subtitle">Update your login password</span>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                            <div class="setting-action-item" onclick="changeUpiPinFromSettings()">
+                                <div class="setting-action-content">
+                                    <i class="fas fa-key"></i>
+                                    <div class="setting-action-text">
+                                        <span class="action-title">Change UPI PIN</span>
+                                        <span class="action-subtitle">Update your 4-digit UPI PIN</span>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </div>
+                        <div class="settings-section">
+                            <h3>Privacy</h3>
+                            <div class="setting-item">
+                                <label>
+                                    <input type="checkbox"> Share Usage Data
+                                </label>
+                            </div>
+                        </div>
+                        <button class="btn-save" onclick="saveSettings()">Save Settings</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        
+        // Change Password Modal Function
+        function showChangePasswordModal() {
+            const modal = document.createElement('div');
+            modal.className = 'profile-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Change Password</h2>
+                        <span class="close-modal" onclick="closeModal()">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <form id="changePasswordForm" onsubmit="submitPasswordChange(event)">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" name="currentPassword" required>
+                                <i class="fas fa-eye password-toggle" onclick="togglePasswordVisibility('currentPassword')"></i>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" id="newPassword" name="newPassword" required minlength="8">
+                                <i class="fas fa-eye password-toggle" onclick="togglePasswordVisibility('newPassword')"></i>
+                                <small class="password-hint">Must be at least 8 characters long</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm New Password</label>
+                                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                                <i class="fas fa-eye password-toggle" onclick="togglePasswordVisibility('confirmPassword')"></i>
+                            </div>
+                            
+                            <div class="password-strength" id="passwordStrength"></div>
+                            
+                            <div class="modal-actions">
+                                <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                                <button type="submit" class="btn-save">Change Password</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            
+            // Add password strength checker
+            document.getElementById('newPassword').addEventListener('input', checkPasswordStrength);
+        }
+        
+        // Change UPI PIN Modal Function
+        function showChangeUpiPinModal() {
+            const modal = document.createElement('div');
+            modal.className = 'profile-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Change UPI PIN</h2>
+                        <span class="close-modal" onclick="closeModal()">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <form id="changeUpiPinForm" onsubmit="submitUpiPinChange(event)">
+                            <div class="form-group">
+                                <label for="currentUpiPin">Current UPI PIN</label>
+                                <input type="password" id="currentUpiPin" name="currentUpiPin" maxlength="4" pattern="[0-9]{4}" required>
+                                <small class="pin-hint">Enter your current 4-digit UPI PIN</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newUpiPin">New UPI PIN</label>
+                                <input type="password" id="newUpiPin" name="newUpiPin" maxlength="4" pattern="[0-9]{4}" required>
+                                <small class="pin-hint">Enter new 4-digit UPI PIN</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirmUpiPin">Confirm New UPI PIN</label>
+                                <input type="password" id="confirmUpiPin" name="confirmUpiPin" maxlength="4" pattern="[0-9]{4}" required>
+                                <small class="pin-hint">Re-enter new UPI PIN to confirm</small>
+                            </div>
+                            
+                            <div class="security-note">
+                                <i class="fas fa-shield-alt"></i>
+                                <p>Your UPI PIN is encrypted and secure. Never share it with anyone.</p>
+                            </div>
+                            
+                            <div class="modal-actions">
+                                <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                                <button type="submit" class="btn-save">Change UPI PIN</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            
+            // Add numeric input restriction for UPI PIN
+            ['currentUpiPin', 'newUpiPin', 'confirmUpiPin'].forEach(id => {
+                document.getElementById(id).addEventListener('input', function(e) {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                });
+            });
+        }
+        
+        // Helper Functions
+        function closeModal() {
+            const modal = document.querySelector('.profile-modal');
+            if (modal) {
+                modal.style.opacity = '0';
+                setTimeout(() => {
+                    modal.remove();
+                }, 300);
+            }
+        }
+        
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.querySelector('.profile-modal');
+            if (modal && event.target === modal) {
+                closeModal();
+            }
+        });
+        
+        function editProfile() {
+            alert('Edit Profile functionality - Coming soon!');
+            closeModal();
+        }
+        
+        function showSecurity() {
+            alert('Security Settings - Coming soon!');
+            closeModal();
+        }
+        
+        function saveSettings() {
+            alert('Settings saved successfully!');
+            closeModal();
+        }
+        
+        // Functions to call password/PIN change from settings
+        function changePasswordFromSettings() {
+            closeModal(); // Close settings modal first
+            setTimeout(() => {
+                showChangePasswordModal(); // Open password change modal
+            }, 300);
+        }
+        
+        function changeUpiPinFromSettings() {
+            closeModal(); // Close settings modal first
+            setTimeout(() => {
+                showChangeUpiPinModal(); // Open UPI PIN change modal
+            }, 300);
+        }
+        
+        // Password Change Functions
+        function submitPasswordChange(event) {
+            event.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Validation
+            if (newPassword !== confirmPassword) {
+                alert('New passwords do not match!');
+                return;
+            }
+            
+            if (newPassword.length < 8) {
+                alert('Password must be at least 8 characters long!');
+                return;
+            }
+            
+            // Here you would typically send to your backend
+            // For now, just show success message
+            alert('Password changed successfully!');
+            closeModal();
+            
+            // You can add actual backend integration here:
+            /*
+            fetch('/change-password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    currentPassword: currentPassword,
+                    newPassword: newPassword
+                })
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      alert('Password changed successfully!');
+                      closeModal();
+                  } else {
+                      alert('Error: ' + data.message);
+                  }
+              });
+            */
+        }
+        
+        // UPI PIN Change Functions
+        function submitUpiPinChange(event) {
+            event.preventDefault();
+            
+            const currentPin = document.getElementById('currentUpiPin').value;
+            const newPin = document.getElementById('newUpiPin').value;
+            const confirmPin = document.getElementById('confirmUpiPin').value;
+            
+            // Validation
+            if (newPin !== confirmPin) {
+                alert('New UPI PINs do not match!');
+                return;
+            }
+            
+            if (newPin.length !== 4) {
+                alert('UPI PIN must be exactly 4 digits!');
+                return;
+            }
+            
+            if (!/^\d{4}$/.test(newPin)) {
+                alert('UPI PIN must contain only numbers!');
+                return;
+            }
+            
+            // Here you would typically send to your backend
+            // For now, just show success message
+            alert('UPI PIN changed successfully!');
+            closeModal();
+            
+            // You can add actual backend integration here:
+            /*
+            fetch('/change-upi-pin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    currentPin: currentPin,
+                    newPin: newPin
+                })
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      alert('UPI PIN changed successfully!');
+                      closeModal();
+                  } else {
+                      alert('Error: ' + data.message);
+                  }
+              });
+            */
+        }
+        
+        // Password Toggle Visibility
+        function togglePasswordVisibility(inputId) {
+            const input = document.getElementById(inputId);
+            const toggle = input.nextElementSibling;
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                toggle.classList.remove('fa-eye');
+                toggle.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                toggle.classList.remove('fa-eye-slash');
+                toggle.classList.add('fa-eye');
+            }
+        }
+        
+        // Password Strength Checker
+        function checkPasswordStrength() {
+            const password = document.getElementById('newPassword').value;
+            const strengthDiv = document.getElementById('passwordStrength');
+            
+            let strength = 0;
+            let feedback = [];
+            
+            if (password.length >= 8) strength++;
+            else feedback.push('At least 8 characters');
+            
+            if (/[a-z]/.test(password)) strength++;
+            else feedback.push('Lowercase letter');
+            
+            if (/[A-Z]/.test(password)) strength++;
+            else feedback.push('Uppercase letter');
+            
+            if (/\d/.test(password)) strength++;
+            else feedback.push('Number');
+            
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            else feedback.push('Special character');
+            
+            const levels = ['Very Weak', 'Weak', 'Fair', 'Good', 'Strong'];
+            const colors = ['#f44336', '#ff9800', '#ffc107', '#4caf50', '#2e7d32'];
+            
+            strengthDiv.innerHTML = `
+                <div class="strength-bar">
+                    <div class="strength-fill" style="width: ${strength * 20}%; background: ${colors[strength - 1] || '#f44336'}"></div>
+                </div>
+                <div class="strength-text" style="color: ${colors[strength - 1] || '#f44336'}">
+                    ${levels[strength - 1] || 'Very Weak'}
+                </div>
+                ${feedback.length > 0 ? '<div class="strength-feedback">Needs: ' + feedback.join(', ') + '</div>' : ''}
+            `;
+        }
+        
+        // UPI ID and QR Code functions
+        function generateUpiId() {
+            // This would typically be done when creating account
+            const userName = "user"; // This would come from user data
+            const upiId = userName + "@paysecure";
+            return upiId;
+        }
+
+        function copyUpiId() {
+            const upiId = document.querySelector('.upi-id').textContent;
+            navigator.clipboard.writeText(upiId).then(function() {
+                // Show success message
+                const button = event.target.closest('.copy-btn');
+                const originalContent = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i>';
+                button.style.background = '#4CAF50';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalContent;
+                    button.style.background = '#1d9bf0';
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Could not copy UPI ID: ', err);
+                alert('Failed to copy UPI ID');
+            });
+        }
+
+        function generateQRCode() {
+            const upiId = generateUpiId();
+            const upiString = `upi://pay?pa=${upiId}&pn=PaySecure User&cu=INR`;
+            
+            const qrContainer = document.getElementById('userQRCode');
+            
+            // Check if QRCode library is loaded
+            if (typeof QRCode === 'undefined') {
+                console.error('QRCode library not loaded');
+                // Show fallback message
+                qrContainer.innerHTML = `
+                    <div style="width: 180px; height: 180px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 2px solid #ddd;">
+                        <div style="text-align: center; color: #666;">
+                            <i class="fas fa-qrcode" style="font-size: 32px; margin-bottom: 10px;"></i>
+                            <div style="font-size: 12px;">Loading QR Code...</div>
+                            <div style="font-size: 10px;">Please wait</div>
+                        </div>
+                    </div>
+                `;
+                
+                // Try to reload and generate after a delay
+                setTimeout(generateQRCode, 2000);
+                return;
+            }
+            
+            // Clear existing content
+            qrContainer.innerHTML = '';
+            
+            // Generate real QR code using qrcode.js library
+            QRCode.toCanvas(qrContainer, upiString, {
+                width: 180,
+                height: 180,
+                color: {
+                    dark: '#000000',  // Black dots
+                    light: '#FFFFFF'  // White background
+                },
+                margin: 1,
+                errorCorrectionLevel: 'M'
+            }, function (error) {
+                if (error) {
+                    console.error('QR Code generation error:', error);
+                    // Fallback display with actual QR pattern
+                    qrContainer.innerHTML = `
+                        <div style="width: 180px; height: 180px; background: white; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 2px solid #1d9bf0; position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: 
+                                radial-gradient(circle at 25% 25%, #000 2px, transparent 2px),
+                                radial-gradient(circle at 75% 25%, #000 2px, transparent 2px),
+                                radial-gradient(circle at 25% 75%, #000 2px, transparent 2px),
+                                radial-gradient(circle at 50% 50%, #000 1px, transparent 1px);
+                                background-size: 20px 20px, 20px 20px, 20px 20px, 10px 10px;">
+                            </div>
+                            <div style="background: white; padding: 10px; border-radius: 4px; text-align: center; font-size: 10px; font-weight: bold; color: #1d9bf0; z-index: 1;">
+                                <div>PaySecure</div>
+                                <div style="font-size: 8px; margin-top: 2px;">Scan to Pay</div>
+                                <div style="font-size: 6px; margin-top: 2px; color: #666;">${upiId}</div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    console.log('QR Code generated successfully');
+                }
+            });
+        }
+
+        function downloadQR() {
+            const upiId = generateUpiId();
+            const upiString = `upi://pay?pa=${upiId}&pn=PaySecure User&cu=INR`;
+            
+            // Create a larger canvas for download with branding
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = 400;
+            canvas.height = 500;
+            
+            // White background
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, 400, 500);
+            
+            // Generate QR code first
+            QRCode.toCanvas(canvas, upiString, {
+                width: 300,
+                height: 300,
+                color: {
+                    dark: '#000000',
+                    light: '#FFFFFF'
+                },
+                margin: 2,
+                errorCorrectionLevel: 'M'
+            }, function (error) {
+                if (error) {
+                    console.error('Download QR Code generation error:', error);
+                    alert('Failed to generate QR code for download');
+                    return;
+                }
+                
+                // Add branding below QR code
+                ctx.fillStyle = '#1d9bf0';
+                ctx.font = 'bold 24px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('PaySecure', 200, 380);
+                
+                ctx.fillStyle = '#333';
+                ctx.font = '16px Arial';
+                ctx.fillText('Scan to Pay', 200, 405);
+                
+                ctx.font = '14px Arial';
+                ctx.fillText(`UPI ID: ${upiId}`, 200, 430);
+                
+                ctx.font = '12px Arial';
+                ctx.fillStyle = '#666';
+                ctx.fillText('Powered by PaySecure Payment System', 200, 460);
+                
+                // Download the image
+                const link = document.createElement('a');
+                link.download = 'PaySecure-QR-Code.png';
+                link.href = canvas.toDataURL('image/png', 1.0);
+                link.click();
+            });
+        }
+
+        function shareQR() {
+            const upiId = generateUpiId();
+            const upiString = `upi://pay?pa=${upiId}&pn=PaySecure User&cu=INR`;
+            
+            // Create canvas for sharing
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = 350;
+            canvas.height = 450;
+            
+            // White background
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, 350, 450);
+            
+            // Generate real QR code
+            QRCode.toCanvas(canvas, upiString, {
+                width: 280,
+                height: 280,
+                color: {
+                    dark: '#000000',
+                    light: '#FFFFFF'
+                },
+                margin: 2,
+                errorCorrectionLevel: 'M'
+            }, function (error) {
+                if (error) {
+                    console.error('Share QR Code generation error:', error);
+                    alert('Failed to generate QR code for sharing');
+                    return;
+                }
+                
+                // Add branding
+                ctx.fillStyle = '#1d9bf0';
+                ctx.font = 'bold 20px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('PaySecure', 175, 330);
+                
+                ctx.fillStyle = '#333';
+                ctx.font = '16px Arial';
+                ctx.fillText('Scan to Pay', 175, 355);
+                
+                ctx.font = '14px Arial';
+                ctx.fillText(`UPI ID: ${upiId}`, 175, 380);
+                
+                ctx.font = '12px Arial';
+                ctx.fillStyle = '#666';
+                ctx.fillText('Secure Digital Payments', 175, 410);
+                
+                // Convert to blob and share
+                canvas.toBlob(function(blob) {
+                    const file = new File([blob], 'PaySecure-QR-Code.png', { type: 'image/png' });
+                    
+                    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                        navigator.share({
+                            title: 'My PaySecure QR Code',
+                            text: `Pay me using this QR code. UPI ID: ${upiId}`,
+                            files: [file]
+                        }).catch(function(error) {
+                            console.log('Error sharing QR code:', error);
+                            // Fallback: download the image
+                            downloadGeneratedQR(canvas);
+                        });
+                    } else {
+                        // Fallback: download the image
+                        downloadGeneratedQR(canvas);
+                        alert('QR code downloaded! You can share the downloaded image manually.');
+                    }
+                }, 'image/png');
+            });
+        }
+        
+        function downloadGeneratedQR(canvas) {
+            const link = document.createElement('a');
+            link.download = 'PaySecure-QR-Code.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        // Update profile name dynamically
+        function updateProfileName(name) {
+            document.querySelector('.profile-name').textContent = name;
+            document.querySelector('.profile-avatar').textContent = name.charAt(0).toUpperCase();
+            
+            // Update UPI ID when name changes
+            const upiId = name.toLowerCase().replace(/\s+/g, '') + "@paysecure";
+            const upiElement = document.querySelector('.upi-id');
+            if (upiElement) {
+                upiElement.textContent = upiId;
+            }
+        }
+        
+        // Alternative QR generation method using Google Charts API as fallback
+        function generateQRCodeFallback() {
+            const upiId = generateUpiId();
+            const upiString = `upi://pay?pa=${upiId}&pn=PaySecure User&cu=INR`;
+            const qrContainer = document.getElementById('userQRCode');
+            
+            if (qrContainer) {
+                // Use Google Charts API as fallback
+                const encodedData = encodeURIComponent(upiString);
+                qrContainer.innerHTML = `
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodedData}" 
+                         alt="UPI QR Code" 
+                         style="border-radius: 8px; border: 2px solid #1d9bf0;"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div style="width: 180px; height: 180px; background: #f8f9fa; display: none; align-items: center; justify-content: center; border-radius: 8px; border: 2px solid #1d9bf0; flex-direction: column;">
+                        <i class="fas fa-qrcode" style="font-size: 32px; color: #1d9bf0; margin-bottom: 10px;"></i>
+                        <div style="font-size: 12px; font-weight: bold; color: #1d9bf0;">PaySecure QR</div>
+                        <div style="font-size: 10px; color: #666; text-align: center; margin-top: 5px;">${upiId}</div>
+                        <div style="font-size: 8px; color: #999; margin-top: 5px;">Scan to Pay</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Initialize user data (you can modify this with real user data)
+        document.addEventListener('DOMContentLoaded', function() {
+            // You can load user data from localStorage or API
+            const userData = {
+                name: 'User',
+                email: 'user@example.com',
+                phone: '+91 98765 43210'
+            };
+            
+            // Update UI with user data
+            if (userData.name !== 'User') {
+                updateProfileName(userData.name);
+            }
+            
+            // Try multiple QR generation methods
+            setTimeout(() => {
+                if (typeof QRCode !== 'undefined') {
+                    generateQRCode();
+                } else {
+                    generateQRCodeFallback();
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>

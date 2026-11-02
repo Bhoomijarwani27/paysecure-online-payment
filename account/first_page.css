@@ -1,0 +1,21 @@
+        .logo{
+            font-family:'poppins',sans-serif;
+            font-size: 32px;
+            font-weight: bold;
+             margin: 30px;
+        }
+        .logo .pay {
+            color: #333;
+        }
+        .logo .secure {
+            color: #1d9bf0;
+        }
+        .logo i {
+            color: #1d9bf0;
+            margin-right: 8px;
+        }
+#banner{
+        display: flex;
+    justify-content: center;
+}
+

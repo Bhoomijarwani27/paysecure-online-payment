@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayEase - Dashboard</title>
+    
+    <!-- FORCE LOAD NEW CSS - OVERRIDE EVERYTHING -->
+    <link rel="stylesheet" href="homepage.css?v=20250930c&force=override"
+          onload="console.log('CSS LOADED SUCCESSFULLY')"
+          onerror="console.error('CSS FAILED TO LOAD')">
+    
+    <!-- Prevent caching -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <!-- Material Icons for modern design -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</head>
+<body>
+    <!-- Modern PaySecure-Style Header -->
+    <header class="header">
+        <div class="logo">
+            <i class="material-icons">security</i>
+            PayEase
+        </div>
+        
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search payments, contacts...">
+            <i class="material-icons search-icon">search</i>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+        
+        <div class="profile-section">
+            <div class="notifications" onclick="showNotifications()">
+                <i class="material-icons">notifications</i>
+            </div>
+            
+            <button class="profile-btn" onclick="toggleProfileMenu()">
+                <div class="profile-avatar" id="profileAvatar">U</div>
+                <span id="profileName">Loading...</span>
+                <i class="material-icons">keyboard_arrow_down</i>
+            </button>
+            
+            <div class="profile-menu" id="profileMenu">
+                <a href="#" class="menu-item" onclick="showProfile()">
+                    <i class="material-icons">person</i>
+                    <span>Profile</span>
+                </a>
+                <a href="#" class="menu-item" onclick="changePassword()">
+                    <i class="material-icons">lock</i>
+                    <span>Change Password</span>
+                </a>
+                <a href="#" class="menu-item" onclick="manageSettings()">
+                    <i class="material-icons">settings</i>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="menu-item" onclick="logout()">
+                    <i class="material-icons">logout</i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container with Modern Layout -->
+    <div class="main-container">
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Balance Card -->
+            <div class="balance-card">
+                <div class="balance-header">
+                    <div class="balance-title">Total Balance</div>
+                    <div class="security-badge">
+                        <i class="material-icons">verified_user</i>
+                        Secured
+                    </div>
+                </div>
+                <div class="balance-amount" id="balanceAmount">₹5,240.50</div>
+                <div class="bank-info">
+                    <div class="bank-details">
+                        <div class="bank-name">HDFC Bank</div>
+                        <div class="account-number">••••••1234</div>
+                    </div>
+                    <button class="switch-bank-btn" onclick="showBankSelector()">
+                        <i class="material-icons">swap_horiz</i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="actions-grid">
+                    <div class="action-card" onclick="sendMoney()">
+                        <div class="action-icon send">
+                            <i class="material-icons">send</i>
+                        </div>
+                        <div class="action-title">Send Money</div>
+                        <div class="action-subtitle">To contacts</div>
+                    </div>
+                    <div class="action-card" onclick="requestMoney()">
+                        <div class="action-icon request">
+                            <i class="material-icons">call_received</i>
+                        </div>
+                        <div class="action-title">Request</div>
+                        <div class="action-subtitle">Ask for payment</div>
+                    </div>
+                    <div class="action-card" onclick="scanQR()">
+                        <div class="action-icon scan">
+                            <i class="material-icons">qr_code_scanner</i>
+                        </div>
+                        <div class="action-title">Scan & Pay</div>
+                        <div class="action-subtitle">QR code payments</div>
+                    </div>
+                    <div class="action-card" onclick="recharge()">
+                        <div class="action-icon recharge">
+                            <i class="material-icons">smartphone</i>
+                        </div>
+                        <div class="action-title">Recharge</div>
+                        <div class="action-subtitle">Mobile & DTH</div>
+                    </div>
+                    <div class="action-card" onclick="billPayment()">
+                        <div class="action-icon bills">
+                            <i class="material-icons">receipt_long</i>
+                        </div>
+                        <div class="action-title">Bill Payment</div>
+                        <div class="action-subtitle">Utilities</div>
+                    </div>
+                    <div class="action-card" onclick="addBank()">
+                        <div class="action-icon bank">
+                            <i class="material-icons">account_balance</i>
+                        </div>
+                        <div class="action-title">Add Bank</div>
+                        <div class="action-subtitle">Link account</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Recent Activity Card -->
+            <div class="activity-card">
+                <div class="card-header">
+                    <h3 class="card-title">Recent Activity</h3>
+                    <a href="#" class="view-all" onclick="showTransactions()">View All</a>
+                </div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon received">
+                            <i class="material-icons">arrow_downward</i>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-title">Money Received</div>
+                            <div class="activity-subtitle">From John Doe</div>
+                        </div>
+                        <div class="activity-amount positive">+₹1,500</div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon sent">
+                            <i class="material-icons">arrow_upward</i>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-title">Payment Sent</div>
+                            <div class="activity-subtitle">To Amazon</div>
+                        </div>
+                        <div class="activity-amount negative">-₹2,300</div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon pending">
+                            <i class="material-icons">schedule</i>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-title">Bill Payment</div>
+                            <div class="activity-subtitle">Electricity</div>
+                        </div>
+                        <div class="activity-amount negative">-₹850</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banks Card -->
+            <div class="banks-card">
+                <div class="card-header">
+                    <h3 class="card-title">Linked Banks</h3>
+                    <a href="#" class="view-all" onclick="addBank()">Add Bank</a>
+                </div>
+                <div class="bank-list" id="bankList">
+                    <div class="bank-card active">
+                        <div class="bank-header">
+                            <div class="bank-name">HDFC Bank</div>
+                            <i class="material-icons status-icon verified">check_circle</i>
+                        </div>
+                        <div class="account-number">•••• •••• •••• 1234</div>
+                        <div class="bank-actions">
+                            <button class="action-btn primary" onclick="selectPrimaryBank('HDFC Bank')">
+                                <i class="material-icons">account_balance</i>
+                                Primary
+                            </button>
+                            <button class="action-btn secondary" onclick="viewBankDetails('HDFC Bank')">
+                                <i class="material-icons">visibility</i>
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button class="add-bank-btn" onclick="addBank()">
+                        <i class="material-icons">add</i>
+                        Add New Bank Account
+                    </button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="homepage.js"></script>
+</body>
+</html>

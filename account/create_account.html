@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaySecure - Create Account</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="paysecure-universal.css?v=2">
+    <style>
+        /* Homepage-style header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .logo .pay {
+            color: #333;
+        }
+
+        .logo .secure {
+            color: #1d9bf0;
+        }
+
+        .help-text {
+            color: #1d9bf0;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(29, 155, 240, 0.2);
+        }
+
+        .help-text:hover {
+            background: rgba(29, 155, 240, 0.1);
+            color: #1d9bf0;
+        }
+
+        .create-account-container {
+            display: flex;
+            align-items: center;
+            min-height: 80vh;
+            gap: 40px;
+        }
+        
+        .create-account-card {
+            flex: 1;
+            max-width: 450px;
+        }
+        
+        .create-account-image {
+            flex: 1;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .create-account-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
+        }
+        
+        .custom-graphic {
+            width: 500px;
+            height: 400px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #1d9bf0;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(25, 118, 210, 0.1);
+            margin: 0 auto;
+        }
+        
+        .custom-graphic::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 15px,
+                rgba(25, 118, 210, 0.05) 15px,
+                rgba(25, 118, 210, 0.05) 30px
+            );
+            animation: slide 15s linear infinite;
+        }
+        
+        @keyframes slide {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .graphic-content {
+            z-index: 2;
+            position: relative;
+        }
+        
+        .graphic-icon {
+            font-size: 80px;
+            margin-bottom: 25px;
+            color: #1d9bf0;
+        }
+        
+        .graphic-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .graphic-subtitle {
+            font-size: 18px;
+            color: #666;
+        }
+        
+        .phone-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .phone-group select {
+            width: 80px;
+            padding: 12px 8px;
+            border: 2px solid #f0f0f0;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .phone-group select:focus {
+            border-color: #1d9bf0;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+            background: white;
+        }
+        
+        .phone-group input {
+            flex: 1;
+        }
+        
+        .help-text {
+            color: #1d9bf0;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .help-text:hover {
+            color: #1d9bf0;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .create-account-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .phone-group {
+                flex-direction: column;
+            }
+            
+            .phone-group select {
+                width: 100%;
+            }
+            
+            .custom-graphic {
+                width: 90%;
+                max-width: 400px;
+                height: 300px;
+            }
+            
+            .graphic-icon {
+                font-size: 60px;
+            }
+            
+            .graphic-title {
+                font-size: 24px;
+            }
+            
+            .graphic-subtitle {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-lock" style="color: #1d9bf0;"></i>
+                <span class="pay">pay</span><span class="secure">secure</span>
+            </div>
+            
+            <div class="header-spacer" style="flex: 1;"></div>
+            
+            <div class="help-section">
+                <a href="help.html" class="help-text">Help?</a>
+            </div>
+        </header>
+        
+        <!-- Create Account Content -->
+        <div class="create-account-container">
+            <div class="create-account-card">
+                <div class="page-card">
+                    <h2 class="page-title">Create Your Account</h2>
+                    <p class="subtitle">Please enter your details as per your Aadhar Card</p>
+                    
+                    <form action="http://localhost/online_payment/account/data_access.php" method="post">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" 
+                                   class="form-input"
+                                   placeholder="Enter your full name" 
+                                   name="NAME" 
+                                   pattern="[a-zA-Z\s]+" 
+                                   title="Only letters and spaces allowed" 
+                                   minlength="2" 
+                                   maxlength="50" 
+                                   oninput="validateName(this)"
+                                   required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <div class="phone-group">
+                                <select name="COUNTRYCODE" required>
+                                    <option value="+91">+91</option>
+                                    <option value="+1">+1</option>
+                                    <option value="+44">+44</option>
+                                </select>
+                                <input type="text" 
+                                       class="form-input"
+                                       placeholder="Enter phone number" 
+                                       name="PHONENO" 
+                                       pattern="[0-9]{10}" 
+                                       required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Referral Code (Optional)</label>
+                            <div class="form-input-wrapper">
+                                <i class="fas fa-gift" style="color: #1d9bf0;"></i>
+                                <input type="text" 
+                                       id="referralCode"
+                                       class="form-input"
+                                       placeholder="Enter referral code to earn ₹50" 
+                                       name="REFERRAL_CODE"
+                                       style="text-transform: uppercase;"
+                                       maxlength="10">
+                            </div>
+                            <small id="referralStatus" style="margin-top: 5px; display: block;"></small>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">
+                            Create Account
+                        </button>
+                        
+                        <p style="text-align: center; margin-top: 20px; color: #666;">
+                            Already have an account? 
+                            <a href="login.html" style="color: #1d9bf0; text-decoration: none; font-weight: 500;">Login</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="create-account-image">
+                <!-- Option 1: Custom white graphic (ACTIVE - Perfect color match!) -->
+                <div class="custom-graphic">
+                    <div class="graphic-content">
+                        <i class="fas fa-user-plus graphic-icon"></i>
+                        <div class="graphic-title">Join PaySecure</div>
+                        <div class="graphic-subtitle">Secure • Fast • Reliable</div>
+                    </div>
+                </div>
+                
+               
+        </div>
+    </div>
+    
+    <script>
+        function validateName(input) {
+            // Remove extra spaces and get actual length
+            const trimmedValue = input.value.trim();
+            const actualLength = trimmedValue.replace(/\s+/g, ' ').length;
+            
+            // Clear previous custom validation
+            input.setCustomValidity('');
+            
+            if (trimmedValue === '') {
+                input.setCustomValidity('Please enter your name');
+            } else if (actualLength < 2) {
+                input.setCustomValidity('Name must be at least 2 characters long');
+            } else if (!/^[a-zA-Z\s]+$/.test(trimmedValue)) {
+                input.setCustomValidity('Only letters and spaces are allowed');
+            } else if (/^\s/.test(input.value) || /\s$/.test(input.value)) {
+                input.setCustomValidity('Name cannot start or end with spaces');
+            }
+        }
+        
+        // Real referral code validation
+        let validationTimeout;
+        document.getElementById('referralCode').addEventListener('input', function(e) {
+            const code = e.target.value.toUpperCase();
+            const status = document.getElementById('referralStatus');
+            
+            // Update input value to uppercase
+            e.target.value = code;
+            
+            if (code.length === 0) {
+                status.textContent = '';
+                status.style.color = '';
+                return;
+            }
+            
+            if (code.length >= 4) {
+                // Clear previous timeout
+                clearTimeout(validationTimeout);
+                
+                // Add delay to avoid too many API calls
+                validationTimeout = setTimeout(() => {
+                    validateReferralCode(code, status);
+                }, 500);
+            } else {
+                status.textContent = 'Enter at least 4 characters';
+                status.style.color = '#666';
+            }
+        });
+        
+        function validateReferralCode(code, statusElement) {
+            fetch(`referral_system.php?action=validate_code&code=${encodeURIComponent(code)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.valid) {
+                        statusElement.textContent = data.message;
+                        statusElement.style.color = '#4CAF50';
+                    } else {
+                        statusElement.textContent = data.message;
+                        statusElement.style.color = '#FF5722';
+                    }
+                })
+                .catch(error => {
+                    statusElement.textContent = '✗ Unable to validate code. Please try again.';
+                    statusElement.style.color = '#FF5722';
+                });
+        }
+        
+        // Also validate on form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const nameInput = document.querySelector('input[name="NAME"]');
+            const trimmedName = nameInput.value.trim();
+            
+            if (trimmedName.length < 2) {
+                e.preventDefault();
+                alert('Please enter a valid name with at least 2 characters');
+                nameInput.focus();
+                return false;
+            }
+            
+            // Clean the input value before submission
+            nameInput.value = trimmedName.replace(/\s+/g, ' ');
+        });
+    </script>
+</body>
+</html>

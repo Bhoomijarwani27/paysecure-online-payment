@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan and Pay - PaySecure</title>
+
+  <link rel="stylesheet" href="paysecure-universal.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    /* BEAUTIFUL GRADIENT BACKGROUND - Match Homepage Design */
+    body {
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #42A5F5 0%, #1976D2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Page container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    /* Header - Clean modern styling */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 20px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
+      margin: 0 40px 24px 40px !important;
+      width: calc(100% - 80px) !important;
+      box-sizing: border-box !important;
+      min-height: 76px !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Card styling */
+    .page-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
+      margin-bottom: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      max-width: 800px;
+      margin: 0 auto 24px auto;
+    }
+
+    .page-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 24px;
+      font-weight: 700;
+      color: #222;
+      margin: 0 0 30px 0;
+    }
+
+    /* Back button styling */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      text-decoration: none;
+      margin: 0 auto 16px auto;
+      max-width: 800px;
+      display: flex;
+      font-weight: 600;
+      opacity: 0.9;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      opacity: 1;
+      transform: translateX(-2px);
+    }
+
+    /* Button styling */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 24px;
+      border-radius: 12px;
+      border: 0;
+      background: linear-gradient(135deg, #42A5F5 0%, #1976D2 100%);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(25, 118, 210, 0.3);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 24px;
+      border-radius: 12px;
+      border: 2px solid #e3f2fd;
+      background: #fff;
+      cursor: pointer;
+      color: #1d9bf0;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn-secondary:hover {
+      background: #e3f2fd;
+      transform: translateY(-1px);
+    }
+
+    /* Scan Options */
+    .scan-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    /* Payment Card Styling (New) */
+    .payment-card-content {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .merchant-avatar {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #42A5F5 0%, #1976D2 100%);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: bold;
+      margin: 0 auto 16px;
+      box-shadow: 0 4px 15px rgba(25, 118, 210, 0.2);
+    }
+
+    .merchant-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 4px;
+    }
+
+    .merchant-phone {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .amount-input-wrapper {
+      position: relative;
+      max-width: 300px;
+      margin: 0 auto 30px;
+    }
+
+    .currency-prefix {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 32px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .big-amount-input {
+      width: 100%;
+      border: none;
+      border-bottom: 2px solid #e0e0e0;
+      font-size: 48px;
+      font-weight: 700;
+      color: #333;
+      text-align: center;
+      padding: 10px 0;
+      background: transparent;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .big-amount-input:focus {
+      border-bottom-color: #1976D2;
+    }
+
+    .big-amount-input::placeholder {
+      color: #ccc;
+    }
+
+    .note-input {
+      width: 100%;
+      max-width: 400px;
+      padding: 12px 16px;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 15px;
+      margin-bottom: 30px;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    .note-input:focus {
+      border-color: #1976D2;
+      box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .pay-btn-large {
+      background: linear-gradient(135deg, #00C853 0%, #64DD17 100%);
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pay-btn-large:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 200, 83, 0.4);
+    }
+
+    /* QR Scanner Modal */
+    .qr-scanner-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-scanner-box {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+    }
+
+    .qr-video {
+      width: 100%;
+      border-radius: 12px;
+      background: #000;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-container">
+
+    <!-- Header -->
+    <header class="header">
+      <a href="homepage_clean.php" class="logo">
+        <i class="fas fa-lock" style="color: #1d9bf0; font-size: 24px; margin-right: 8px;"></i>
+        <div>
+          <span style="font-weight: 700; font-size: 24px; color: #222;">pay</span><span
+            style="font-weight: 700; font-size: 24px; color: #1d9bf0;">secure</span>
+        </div>
+      </a>
+      <!-- Simplified header for this page -->
+      <div style="font-weight: 600; color: #666;">Secure Payment Gateway</div>
+    </header>
+
+    <!-- Back link -->
+    <a href="homepage_clean.php" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+
+    <!-- Main Card -->
+    <div class="page-card">
+
+      <!-- 1. Scan Options Section -->
+      <div id="scanSection">
+        <h1 class="page-title">
+          <i class="fas fa-qrcode" style="color: #1d9bf0;"></i>
+          Scan & Pay
+        </h1>
+
+        <div class="scan-options">
+          <button class="btn-primary" onclick="openCamera()"
+            style="padding: 40px; height: 200px; flex-direction: column; gap: 15px; font-size: 18px;">
+            <i class="fas fa-camera" style="font-size: 48px;"></i>
+            <div>Camera Scan</div>
+            <small style="opacity: 0.8; font-weight: 400;">Scan any UPI QR</small>
+          </button>
+
+          <button class="btn-secondary" onclick="openGallery()"
+            style="padding: 40px; height: 200px; flex-direction: column; gap: 15px; font-size: 18px;">
+            <i class="fas fa-image" style="font-size: 48px;"></i>
+            <div>Upload Photo</div>
+            <small style="opacity: 0.8; font-weight: 400;">From Gallery</small>
+          </button>
+        </div>
+
+        <!-- Hidden file input -->
+        <input type="file" id="photoFileInput" accept="image/*" style="display:none"
+          onchange="handlePhotoUpload(event)">
+        <div id="uploadStatus" style="margin-top: 15px; text-align: center; display: none;"></div>
+      </div>
+
+      <!-- 2. Payment Card Section (Initially Hidden) -->
+      <div id="paymentContainer" style="display: none;">
+        <div class="payment-card-content">
+
+          <!-- Merchant Info -->
+          <div class="merchant-avatar">
+            <i class="fas fa-store"></i>
+          </div>
+          <div class="merchant-name" id="displayMerchantName">Merchant Payment</div>
+
+          <!-- Static Merchant Phone/VPA (Hidden by default) -->
+          <div id="displayMerchantPhone"
+            style="font-size: 16px; color: #666; margin-bottom: 20px; font-weight: 600; display: none;">
+            +91 XXXXX XXXXX
+          </div>
+
+          <!-- Detection Message (For failed scans) -->
+          <div id="detectionMessage" style="font-size: 13px; color: #d32f2f; margin-bottom: 10px; display: none;">
+            <i class="fas fa-exclamation-circle"></i> Payment info not found in QR. Please enter manually.
+          </div>
+
+          <!-- Editable Merchant Phone Input (Visible by default for manual entry) -->
+          <div id="manualPhoneInputWrapper" style="margin-bottom: 20px;">
+            <input type="tel" id="merchantPhoneInput" placeholder="Enter Merchant Phone" maxlength="10"
+              style="border: none; background: transparent; font-size: 16px; color: #666; text-align: center; width: 100%; outline: none; font-weight: 600; letter-spacing: 1px;"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
+            <div style="height: 1px; background: #e0e0e0; width: 150px; margin: 5px auto 0;"></div>
+          </div>
+
+          <!-- Amount Input -->
+          <div class="amount-input-wrapper">
+            <input type="number" id="paymentAmount" class="big-amount-input" placeholder="0" autofocus>
+            <div style="margin-top: 8px; font-size: 14px; color: #999;">Enter Amount</div>
+          </div>
+
+          <!-- Note Input -->
+          <input type="text" id="paymentNote" class="note-input" placeholder="Add a note (optional)">
+
+          <!-- Actions -->
+          <div class="action-buttons">
+            <button class="btn-secondary" onclick="resetToScan()">
+              Cancel
+            </button>
+            <button class="pay-btn-large" onclick="initiatePayment()">
+              <i class="fas fa-lock"></i> Pay Securely
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- QR Scanner Modal -->
+    <div id="qrScannerModal" class="qr-scanner-modal">
+      <div class="qr-scanner-box">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <h3 style="margin:0;">Scan QR Code</h3>
+          <button onclick="closeQRScanner()"
+            style="border:0;background:transparent;font-size:24px;cursor:pointer;">&times;</button>
+        </div>
+        <video id="qrVideo" class="qr-video" autoplay muted playsinline></video>
+        <canvas id="qrCanvas" style="display:none"></canvas>
+        <div style="text-align:center; margin-top: 15px;">
+          <button class="btn-secondary" onclick="closeQRScanner()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+  <script>
+    // Global State
+    let currentMerchantPhone = '';
+    let currentMerchantVPA = '';
+    let video = document.getElementById('qrVideo');
+    let canvas = document.getElementById('qrCanvas');
+    let ctx = canvas.getContext('2d');
+    let stream = null;
+    let scanning = false;
+
+    // --- 1. Scanning Logic ---
+
+    function openCamera() {
+      document.getElementById('qrScannerModal').style.display = 'flex';
+      startQRScanner();
+    }
+
+    function openGallery() {
+      document.getElementById('photoFileInput').click();
+    }
+
+    function handlePhotoUpload(event) {
+      const file = event.target.files[0];
+      const statusDiv = document.getElementById('uploadStatus');
+
+      if (!file) return;
+
+      statusDiv.style.display = 'block';
+      statusDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+      statusDiv.style.color = '#1976D2';
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const img = new Image();
+        img.onload = function () {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "dontInvert" });
+
+          if (code) {
+            statusDiv.innerHTML = '✅ QR Found!';
+            statusDiv.style.color = 'green';
+            setTimeout(() => {
+              statusDiv.style.display = 'none';
+              processQRCode(code.data);
+            }, 800);
+          } else {
+            statusDiv.innerHTML = '❌ No QR code found';
+            statusDiv.style.color = 'red';
+            setTimeout(() => {
+              statusDiv.style.display = 'none';
+              processQRCode('');
+            }, 1500);
+          }
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function startQRScanner() {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        video.srcObject = stream;
+        video.setAttribute('playsinline', true);
+        video.play();
+        scanning = true;
+        requestAnimationFrame(tick);
+      } catch (err) {
+        console.error("Camera error", err);
+        alert("Could not access camera");
+      }
+    }
+
+    function tick() {
+      if (!scanning) return;
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        canvas.height = video.videoHeight;
+        canvas.width = video.videoWidth;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: "dontInvert" });
+
+        if (code) {
+          closeQRScanner();
+          processQRCode(code.data);
+          return;
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function closeQRScanner() {
+      scanning = false;
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+      }
+      document.getElementById('qrScannerModal').style.display = 'none';
+    }
+
+    // --- 2. Processing Logic ---
+
+    function processQRCode(data) {
+      console.log("QR Data:", data);
+
+      let phone = '';
+      let vpa = '';
+      let merchantName = 'Merchant';
+
+      if (data) {
+        // Extract VPA from UPI URL
+        if (data.includes('pa=')) {
+          const urlParams = new URLSearchParams(data.split('?')[1]);
+          vpa = urlParams.get('pa') || '';
+
+          // Get merchant name if available
+          const pn = urlParams.get('pn');
+          if (pn) {
+            merchantName = decodeURIComponent(pn);
+          }
+
+          // Try to extract phone from VPA if it starts with 10 digits
+          if (vpa && vpa.includes('@')) {
+            const vpaParts = vpa.split('@');
+            if (vpaParts[0].match(/^\d{10}$/)) {
+              phone = vpaParts[0];
+            }
+          }
+        }
+
+        // Fallback: Try to find any 10 digit number
+        if (!phone) {
+          const matches = data.match(/\d{10}/g);
+          if (matches && matches.length > 0) {
+            phone = matches[0];
+          }
+        }
+      }
+
+      showPaymentCard(phone, vpa, merchantName);
+    }
+
+    function showPaymentCard(phone, vpa, merchantName) {
+      document.getElementById('scanSection').style.display = 'none';
+      document.getElementById('paymentContainer').style.display = 'block';
+
+      const phoneInputWrapper = document.getElementById('manualPhoneInputWrapper');
+      const phoneInput = document.getElementById('merchantPhoneInput');
+      const phoneDisplay = document.getElementById('displayMerchantPhone');
+      const amountInput = document.getElementById('paymentAmount');
+      const merchantNameDisplay = document.getElementById('displayMerchantName');
+      const detectionMessage = document.getElementById('detectionMessage');
+
+      currentMerchantPhone = phone;
+      currentMerchantVPA = vpa;
+
+      if (phone || vpa) {
+        // SUCCESS: Either phone or VPA extracted
+        merchantNameDisplay.textContent = merchantName;
+
+        if (vpa) {
+          phoneDisplay.textContent = vpa;
+        } else {
+          phoneDisplay.textContent = `+91 ${phone}`;
+        }
+
+        phoneDisplay.style.display = 'block';
+        phoneInputWrapper.style.display = 'none';
+        detectionMessage.style.display = 'none';
+
+        amountInput.focus();
+      } else {
+        // FAILURE: Neither phone nor VPA found
+        currentMerchantPhone = '';
+        currentMerchantVPA = '';
+
+        merchantNameDisplay.textContent = `Enter Details`;
+        phoneDisplay.style.display = 'none';
+        phoneInputWrapper.style.display = 'block';
+        phoneInput.value = '';
+        detectionMessage.style.display = 'block';
+
+        phoneInput.focus();
+      }
+    }
+
+    function resetToScan() {
+      document.getElementById('paymentContainer').style.display = 'none';
+      document.getElementById('scanSection').style.display = 'block';
+      document.getElementById('photoFileInput').value = '';
+      currentMerchantPhone = '';
+      currentMerchantVPA = '';
+    }
+
+    // --- 3. Payment Logic ---
+
+    function initiatePayment() {
+      const amount = document.getElementById('paymentAmount').value;
+      const note = document.getElementById('paymentNote').value;
+
+      let phone = currentMerchantPhone;
+      let vpa = currentMerchantVPA;
+
+      if (!vpa && !phone) {
+        phone = document.getElementById('merchantPhoneInput').value;
+      }
+
+      if (!vpa && (!phone || phone.length !== 10)) {
+        alert("Please enter a valid 10-digit merchant phone number");
+        document.getElementById('manualPhoneInputWrapper').style.display = 'block';
+        document.getElementById('merchantPhoneInput').focus();
+        return;
+      }
+
+      if (!amount || amount <= 0) {
+        alert("Please enter a valid amount");
+        document.getElementById('paymentAmount').focus();
+        return;
+      }
+
+      // Show PIN Modal
+      const modal = document.createElement('div');
+      modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:center;z-index:20000;backdrop-filter:blur(5px);';
+      modal.innerHTML = `
+        <div style="background:white;padding:30px;border-radius:20px;width:90%;max-width:350px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.2);">
+          <h3 style="margin:0 0 10px;color:#333;">Enter UPI PIN</h3>
+          <p style="color:#666;margin-bottom:20px;">Paying ₹${amount}</p>
+          
+          <input type="password" id="upiPinInput" maxlength="6" 
+            style="font-size:32px;letter-spacing:10px;width:100%;margin:10px 0 30px;text-align:center;border:none;border-bottom:2px solid #ddd;outline:none;padding-bottom:10px;">
+          
+          <div style="display:flex;gap:15px;justify-content:center;">
+            <button id="cancelPinBtn" style="flex:1;padding:12px;border:none;background:#f5f5f5;border-radius:10px;font-weight:600;cursor:pointer;">Cancel</button>
+            <button id="confirmPayBtn" style="flex:1;padding:12px;border:none;background:#1976D2;color:white;border-radius:10px;font-weight:600;cursor:pointer;">Pay</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      const pinInput = document.getElementById('upiPinInput');
+      pinInput.focus();
+
+      document.getElementById('cancelPinBtn').onclick = () => modal.remove();
+
+      document.getElementById('confirmPayBtn').onclick = () => {
+        const pin = pinInput.value;
+        if (pin.length < 4) {
+          alert("Invalid PIN");
+          return;
+        }
+
+        // Show Loading
+        modal.innerHTML = `
+          <div style="background:white;padding:40px;border-radius:20px;text-align:center;">
+            <i class="fas fa-circle-notch fa-spin" style="font-size:40px;color:#1976D2;"></i>
+            <h3 style="margin:20px 0 0;color:#333;">Processing Payment...</h3>
+          </div>
+        `;
+
+        // API Call - Send VPA if available, otherwise phone
+        const payload = {
+          amount: amount,
+          note: note,
+          pin: pin
+        };
+
+        if (vpa) {
+          payload.counterparty_vpa = vpa;
+        } else {
+          payload.counterparty_phone = phone;
+        }
+
+        fetch('process_send_money.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+          .then(res => res.json())
+          .then(data => {
+            modal.remove();
+            if (data.success || data.ok) {
+              showSuccessReceipt(data);
+            } else {
+              alert("Payment Failed: " + (data.error || data.message));
+            }
+          })
+          .catch(err => {
+            modal.remove();
+            console.error(err);
+            stream.getTracks().forEach(track => track.stop());
+            stream = null;
+          }
+      document.getElementById('qrScannerModal').style.display = 'none';
+      }
+
+      // --- 2. Processing Logic ---
+
+      function processQRCode(data) {
+        console.log("QR Data:", data);
+
+        let phone = '';
+        let vpa = '';
+        let merchantName = 'Merchant';
+
+        if (data) {
+          // Extract VPA from UPI URL
+          if (data.includes('pa=')) {
+            const urlParams = new URLSearchParams(data.split('?')[1]);
+            vpa = urlParams.get('pa') || '';
+
+            // Get merchant name if available
+            const pn = urlParams.get('pn');
+            if (pn) {
+              merchantName = decodeURIComponent(pn);
+            }
+
+            // Try to extract phone from VPA if it starts with 10 digits
+            if (vpa && vpa.includes('@')) {
+              const vpaParts = vpa.split('@');
+              if (vpaParts[0].match(/^\d{10}$/)) {
+                phone = vpaParts[0];
+              }
+            }
+          }
+
+          // Fallback: Try to find any 10 digit number
+          if (!phone) {
+            const matches = data.match(/\d{10}/g);
+            if (matches && matches.length > 0) {
+              phone = matches[0];
+            }
+          }
+        }
+
+        showPaymentCard(phone, vpa, merchantName);
+      }
+
+      function showPaymentCard(phone, vpa, merchantName) {
+        document.getElementById('scanSection').style.display = 'none';
+        document.getElementById('paymentContainer').style.display = 'block';
+
+        const phoneInputWrapper = document.getElementById('manualPhoneInputWrapper');
+        const phoneInput = document.getElementById('merchantPhoneInput');
+        const phoneDisplay = document.getElementById('displayMerchantPhone');
+        const amountInput = document.getElementById('paymentAmount');
+        const merchantNameDisplay = document.getElementById('displayMerchantName');
+        const detectionMessage = document.getElementById('detectionMessage');
+
+        currentMerchantPhone = phone;
+        currentMerchantVPA = vpa;
+
+        if (phone || vpa) {
+          // SUCCESS: Either phone or VPA extracted
+          merchantNameDisplay.textContent = merchantName;
+
+          if (vpa) {
+            phoneDisplay.textContent = vpa;
+          } else {
+            phoneDisplay.textContent = `+91 ${phone}`;
+          }
+
+          phoneDisplay.style.display = 'block';
+          phoneInputWrapper.style.display = 'none';
+          detectionMessage.style.display = 'none';
+
+          amountInput.focus();
+        } else {
+          // FAILURE: Neither phone nor VPA found
+          currentMerchantPhone = '';
+          currentMerchantVPA = '';
+
+          merchantNameDisplay.textContent = `Enter Details`;
+          phoneDisplay.style.display = 'none';
+          phoneInputWrapper.style.display = 'block';
+          phoneInput.value = '';
+          detectionMessage.style.display = 'block';
+
+          phoneInput.focus();
+        }
+      }
+
+      function resetToScan() {
+        document.getElementById('paymentContainer').style.display = 'none';
+        document.getElementById('scanSection').style.display = 'block';
+        document.getElementById('photoFileInput').value = '';
+        currentMerchantPhone = '';
+        currentMerchantVPA = '';
+      }
+
+      // --- 3. Payment Logic ---
+
+      function initiatePayment() {
+        const amount = document.getElementById('paymentAmount').value;
+        const note = document.getElementById('paymentNote').value;
+
+        let phone = currentMerchantPhone;
+        let vpa = currentMerchantVPA;
+
+        if (!vpa && !phone) {
+          phone = document.getElementById('merchantPhoneInput').value;
+        }
+
+        if (!vpa && (!phone || phone.length !== 10)) {
+          alert("Please enter a valid 10-digit merchant phone number");
+          document.getElementById('manualPhoneInputWrapper').style.display = 'block';
+          document.getElementById('merchantPhoneInput').focus();
+          return;
+        }
+
+        if (!amount || amount <= 0) {
+          alert("Please enter a valid amount");
+          document.getElementById('paymentAmount').focus();
+          return;
+        }
+
+        // Show PIN Modal
+        const modal = document.createElement('div');
+        modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:center;z-index:20000;backdrop-filter:blur(5px);';
+        modal.innerHTML = `
+        <div style="background:white;padding:30px;border-radius:20px;width:90%;max-width:350px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.2);">
+          <h3 style="margin:0 0 10px;color:#333;">Enter UPI PIN</h3>
+          <p style="color:#666;margin-bottom:20px;">Paying ₹${amount}</p>
+          
+          <input type="password" id="upiPinInput" maxlength="6" 
+            style="font-size:32px;letter-spacing:10px;width:100%;margin:10px 0 30px;text-align:center;border:none;border-bottom:2px solid #ddd;outline:none;padding-bottom:10px;">
+          
+          <div style="display:flex;gap:15px;justify-content:center;">
+            <button id="cancelPinBtn" style="flex:1;padding:12px;border:none;background:#f5f5f5;border-radius:10px;font-weight:600;cursor:pointer;">Cancel</button>
+            <button id="confirmPayBtn" style="flex:1;padding:12px;border:none;background:#1976D2;color:white;border-radius:10px;font-weight:600;cursor:pointer;">Pay</button>
+          </div>
+        </div>
+      `;
+        document.body.appendChild(modal);
+
+        const pinInput = document.getElementById('upiPinInput');
+        pinInput.focus();
+
+        document.getElementById('cancelPinBtn').onclick = () => modal.remove();
+
+        document.getElementById('confirmPayBtn').onclick = () => {
+          const pin = pinInput.value;
+          if (pin.length < 4) {
+            alert("Invalid PIN");
+            return;
+          }
+
+          // Show Loading
+          modal.innerHTML = `
+          <div style="background:white;padding:40px;border-radius:20px;text-align:center;">
+            <i class="fas fa-circle-notch fa-spin" style="font-size:40px;color:#1976D2;"></i>
+            <h3 style="margin:20px 0 0;color:#333;">Processing Payment...</h3>
+          </div>
+        `;
+
+          // API Call - Send VPA if available, otherwise phone
+          const payload = {
+            amount: amount,
+            note: note,
+            pin: pin
+          };
+
+          if (vpa) {
+            payload.counterparty_vpa = vpa;
+          } else {
+            payload.counterparty_phone = phone;
+          }
+
+          fetch('process_send_money.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          })
+            .then(res => res.json())
+            .then(data => {
+              modal.remove();
+              if (data.success || data.ok) {
+                showSuccessReceipt(data);
+              } else {
+                alert("Payment Failed: " + (data.error || data.message));
+              }
+            })
+            .catch(err => {
+              modal.remove();
+              console.error(err);
+              alert("Network Error: " + err.message);
+            });
+        };
+      }
+
+      function showSuccessReceipt(data) {
+        const receipt = document.createElement('div');
+        receipt.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, #42A5F5 0%, #1976D2 100%);z-index:30000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;overflow-y:auto;';
+
+        const recipientDisplay = currentMerchantVPA || currentMerchantPhone || document.getElementById('merchantPhoneInput').value;
+        const amountDisplay = data.tx_sender ? data.tx_sender.amount : (data.amount || '0.00');
+        const transactionId = data.transaction_id || 'N/A';
+        const newBalance = data.tx_sender ? data.tx_sender.new_balance : 'N/A';
+        const timestamp = new Date().toLocaleString('en-IN', {
+          dateStyle: 'medium',
+          timeStyle: 'short'
+        });
+
+        receipt.innerHTML = `
+        <div style="background:white;border-radius:24px;padding:40px;max-width:450px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+          <!-- Success Icon -->
+          <div style="width:100px;height:100px;background:linear-gradient(135deg, #4CAF50, #45a049);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 30px;box-shadow:0 10px 30px rgba(76,175,80,0.3);animation:scaleIn 0.5s ease;">
+            <i class="fas fa-check" style="color:white;font-size:50px;"></i>
+          </div>
+          
+          <!-- Success Message -->
+          <h2 style="color:#333;margin:0 0 10px;text-align:center;font-size:28px;font-weight:700;">Payment Successful!</h2>
+          
+          <!-- Amount -->
+          <div style="text-align:center;margin:30px 0;">
+            <div style="font-size:16px;color:#666;margin-bottom:8px;">Amount Paid</div>
+            <h1 style="font-size:56px;color:#1976D2;margin:0;font-weight:700;">₹${amountDisplay}</h1>
+          </div>
+          
+          <!-- Recipient Info -->
+          <div style="background:#f5f5f5;border-radius:12px;padding:20px;margin:20px 0;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+              <span style="color:#666;font-size:14px;">Paid to</span>
+              <span style="color:#333;font-weight:600;font-size:14px;">${recipientDisplay}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+              <span style="color:#666;font-size:14px;">Transaction ID</span>
+              <span style="color:#333;font-weight:600;font-size:14px;font-family:monospace;">${transactionId}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+              <span style="color:#666;font-size:14px;">Date & Time</span>
+              <span style="color:#333;font-weight:600;font-size:14px;">${timestamp}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;">
+              <span style="color:#666;font-size:14px;">New Balance</span>
+              <span style="color:#1976D2;font-weight:700;font-size:14px;">₹${newBalance}</span>
+            </div>
+          </div>
+          
+          <!-- Action Buttons -->
+          <div style="display:flex;gap:12px;margin-top:30px;">
+            <button onclick="window.location.href='homepage_clean.php'" style="flex:1;padding:16px;border:none;background:#1976D2;color:white;border-radius:12px;font-weight:600;font-size:16px;cursor:pointer;transition:all 0.3s;">
+              <i class="fas fa-home" style="margin-right:8px;"></i>Home
+            </button>
+            <button onclick="window.location.reload()" style="flex:1;padding:16px;border:2px solid #1976D2;background:white;color:#1976D2;border-radius:12px;font-weight:600;font-size:16px;cursor:pointer;transition:all 0.3s;">
+              <i class="fas fa-qrcode" style="margin-right:8px;"></i>Scan Again
+            </button>
+          </div>
+        </div>
+        
+        <style>
+          @keyframes scaleIn {
+            from {
+              transform: scale(0);
+              opacity: 0;
+            }
+            to {
+              transform: scale(1);
+          phoneInputWrapper.style.display = 'none';
+          detectionMessage.style.display = 'none';
+
+          amountInput.focus();
+        } else {
+          // FAILURE: Neither phone nor VPA found
+          currentMerchantPhone = '';
+          currentMerchantVPA = '';
+
+          merchantNameDisplay.textContent = `Enter Details`;
+          phoneDisplay.style.display = 'none';
+          phoneInputWrapper.style.display = 'block';
+          phoneInput.value = '';
+          detectionMessage.style.display = 'block';
+
+          phoneInput.focus();
+        }
+      }
+
+      function resetToScan() {
+        document.getElementById('paymentContainer').style.display = 'none';
+        document.getElementById('scanSection').style.display = 'block';
+        document.getElementById('photoFileInput').value = '';
+        currentMerchantPhone = '';
+        currentMerchantVPA = '';
+      }
+
+      // --- 3. Payment Logic ---
+
+      function initiatePayment() {
+        const amount = document.getElementById('paymentAmount').value;
+        const note = document.getElementById('paymentNote').value;
+
+        let phone = currentMerchantPhone;
+        let vpa = currentMerchantVPA;
+
+        if (!vpa && !phone) {
+          phone = document.getElementById('merchantPhoneInput').value;
+        }
+
+        if (!vpa && (!phone || phone.length !== 10)) {
+          alert("Please enter a valid 10-digit merchant phone number");
+          document.getElementById('manualPhoneInputWrapper').style.display = 'block';
+          document.getElementById('merchantPhoneInput').focus();
+          return;
+        }
+
+        if (!amount || amount <= 0) {
+          alert("Please enter a valid amount");
+          document.getElementById('paymentAmount').focus();
+          return;
+        }
+
+        // Show PIN Modal
+        const modal = document.createElement('div');
+        modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:center;z-index:20000;backdrop-filter:blur(5px);';
+        modal.innerHTML = `
+          < div style = "background:white;padding:30px;border-radius:20px;width:90%;max-width:350px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.2);" >
+          <h3 style="margin:0 0 10px;color:#333;">Enter UPI PIN</h3>
+          <p style="color:#666;margin-bottom:20px;">Paying ₹${amount}</p>
+          
+          <input type="password" id="upiPinInput" maxlength="6" 
+            style="font-size:32px;letter-spacing:10px;width:100%;margin:10px 0 30px;text-align:center;border:none;border-bottom:2px solid #ddd;outline:none;padding-bottom:10px;">
+          
+          <div style="display:flex;gap:15px;justify-content:center;">
+            <button id="cancelPinBtn" style="flex:1;padding:12px;border:none;background:#f5f5f5;border-radius:10px;font-weight:600;cursor:pointer;">Cancel</button>
+            <button id="confirmPayBtn" style="flex:1;padding:12px;border:none;background:#1976D2;color:white;border-radius:10px;font-weight:600;cursor:pointer;">Pay</button>
+          </div>
+        </div>
+        `;
+        document.body.appendChild(modal);
+
+        const pinInput = document.getElementById('upiPinInput');
+        pinInput.focus();
+
+        document.getElementById('cancelPinBtn').onclick = () => modal.remove();
+
+        document.getElementById('confirmPayBtn').onclick = () => {
+          const pin = pinInput.value;
+          if (pin.length < 4) {
+            alert("Invalid PIN");
+            return;
+          }
+
+          // Show Loading
+          modal.innerHTML = `
+          < div style = "background:white;padding:40px;border-radius:20px;text-align:center;" >
+            <i class="fas fa-circle-notch fa-spin" style="font-size:40px;color:#1976D2;"></i>
+            <h3 style="margin:20px 0 0;color:#333;">Processing Payment...</h3>
+          </div >
+          `;
+
+          // API Call - Send VPA if available, otherwise phone
+          const payload = {
+            amount: amount,
+            note: note,
+            pin: pin
+          };
+
+          if (vpa) {
+            payload.counterparty_vpa = vpa;
+          } else {
+            payload.counterparty_phone = phone;
+          }
+
+          fetch('process_send_money.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          })
+            .then(res => res.json())
+            .then(data => {
+              modal.remove();
+              if (data.success || data.ok) {
+                showSuccessReceipt(data);
+              } else {
+                alert("Payment Failed: " + (data.error || data.message));
+              }
+            })
+            .catch(err => {
+              modal.remove();
+              console.error(err);
+              alert("Network Error: " + err.message);
+            });
+        };
+      }
+
+      function showSuccessReceipt(data) {
+        const receipt = document.createElement('div');
+        receipt.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, #42A5F5 0%, #1976D2 100%);z-index:30000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;overflow-y:auto;';
+
+        const recipientDisplay = currentMerchantVPA || currentMerchantPhone || document.getElementById('merchantPhoneInput').value;
+        const amountDisplay = data.tx_sender ? data.tx_sender.amount : (data.amount || '0.00');
+        const transactionId = data.transaction_id || 'N/A';
+        const newBalance = data.tx_sender ? data.tx_sender.new_balance : 'N/A';
+        const timestamp = new Date().toLocaleString('en-IN', {
+          dateStyle: 'medium',
+          timeStyle: 'short'
+        });
+
+        receipt.innerHTML = `
+          < div style = "background:white;border-radius:24px;padding:40px;max-width:450px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);" >
+          < !--Success Icon-- >
+          <div style="width:100px;height:100px;background:linear-gradient(135deg, #4CAF50, #45a049);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 30px;box-shadow:0 10px 30px rgba(76,175,80,0.3);animation:scaleIn 0.5s ease;">
+            <i class="fas fa-check" style="color:white;font-size:50px;"></i>
+          </div>
+          
+          <!--Success Message-- >
+          <h2 style="color:#333;margin:0 0 10px;text-align:center;font-size:28px;font-weight:700;">Payment Successful!</h2>
+          
+          <!--Amount -->
+          <div style="text-align:center;margin:30px 0;">
+            <div style="font-size:16px;color:#666;margin-bottom:8px;">Amount Paid</div>
+            <h1 style="font-size:56px;color:#1976D2;margin:0;font-weight:700;">₹${amountDisplay}</h1>
+          </div>
+          
+          <!--Recipient Info-- >
+          <div style="background:#f5f5f5;border-radius:12px;padding:20px;margin:20px 0;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+              <span style="color:#666;font-size:14px;">Paid to</span>
+              <span style="color:#333;font-weight:600;font-size:14px;">${recipientDisplay}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+              <span style="color:#666;font-size:14px;">Transaction ID</span>
+              <span style="color:#333;font-weight:600;font-size:14px;font-family:monospace;">${transactionId}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+              <span style="color:#666;font-size:14px;">Date & Time</span>
+              <span style="color:#333;font-weight:600;font-size:14px;">${timestamp}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;">
+              <span style="color:#666;font-size:14px;">New Balance</span>
+              <span style="color:#1976D2;font-weight:700;font-size:14px;">₹${newBalance}</span>
+            </div>
+          </div>
+          
+          <!--Action Buttons-- >
+          <div style="display:flex;gap:12px;margin-top:30px;">
+            <button onclick="window.location.href='homepage_clean.php'" style="flex:1;padding:16px;border:none;background:#1976D2;color:white;border-radius:12px;font-weight:600;font-size:16px;cursor:pointer;transition:all 0.3s;">
+              <i class="fas fa-home" style="margin-right:8px;"></i>Home
+            </button>
+            <button onclick="window.location.reload()" style="flex:1;padding:16px;border:2px solid #1976D2;background:white;color:#1976D2;border-radius:12px;font-weight:600;font-size:16px;cursor:pointer;transition:all 0.3s;">
+              <i class="fas fa-qrcode" style="margin-right:8px;"></i>Scan Again
+            </button>
+          </div>
+        </div >
+
+          <style>
+            @keyframes scaleIn {
+              from {
+              transform: scale(0);
+            opacity: 0;
+            }
+            to {
+              transform: scale(1);
+            opacity: 1;
+          }
+          </style>
+      `;
+        document.body.appendChild(receipt);
+      }
+
+  </script>
+</body>
+
+</html>

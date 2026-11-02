@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaySecure - Dashboard</title>
+    <link rel="stylesheet" href="homepage_v1.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</head>
+<body>
+    
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-lock" style="color: #1d9bf0 !important;"></i>
+            <span class="pay">pay</span><span class="secure">secure</span>
+        </div>
+        
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search payments, contacts..." oninput="performSearch()">
+            <i class="fas fa-search search-icon"></i>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+        
+        <div class="profile-section">
+            <div class="notifications">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </div>
+            
+            <div class="profile-btn" onclick="toggleProfileMenu()">
+                <div class="profile-avatar">U</div>
+                <div class="profile-info">
+                    <span class="profile-name">User</span>
+                    <span class="profile-subtitle">Welcome back</span>
+                </div>
+                <i class="fas fa-chevron-down profile-arrow"></i>
+            </div>
+            
+            <!-- Profile Dropdown Menu -->
+            <div class="profile-menu" id="profileMenu">
+                <div class="menu-item" onclick="viewProfile()">
+                    <i class="fas fa-user"></i>
+                    <span>My Profile</span>
+                </div>
+                <div class="menu-item" onclick="viewTransactions()">
+                    <i class="fas fa-history"></i>
+                    <span>Transaction History</span>
+                </div>
+                <div class="menu-item" onclick="viewSettings()">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+                <div class="menu-item" onclick="logout()" style="color: #f44336;">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Balance Overview -->
+            <div class="balance-section">
+                <div class="balance-card">
+                    <div class="balance-header">
+                        <h3>Current Balance</h3>
+                        <i class="fas fa-eye" id="balanceToggle" onclick="toggleBalance()"></i>
+                    </div>
+                    <div class="balance-amount" id="balanceAmount">₹12,450.00</div>
+                    <div class="balance-subtitle">Available balance</div>
+                </div>
+                
+                <div class="balance-actions">
+                    <button class="balance-btn add-money" onclick="addMoney()">
+                        <i class="fas fa-plus"></i>
+                        Add Money
+                    </button>
+                    <button class="balance-btn withdraw" onclick="withdrawMoney()">
+                        <i class="fas fa-minus"></i>
+                        Withdraw
+                    </button>
+                </div>
+            </div>
+
+            <!-- Action Grid -->
+            <div class="action-grid">
+                <div class="action-item scan-qr" onclick="scanQR()">
+                    <div class="action-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <div class="action-label">Scan QR</div>
+                    <div class="action-subtitle">Quick payment</div>
+                </div>
+                
+                <div class="action-item recharge" onclick="mobileRecharge()">
+                    <div class="action-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="action-label">Recharge</div>
+                    <div class="action-subtitle">Mobile & DTH</div>
+                </div>
+                
+                <div class="action-item bills" onclick="payBills()">
+                    <div class="action-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <div class="action-label">Bills</div>
+                    <div class="action-subtitle">Utilities</div>
+                </div>
+                
+                <div class="action-item add-bank" onclick="addBankAccount()">
+                    <div class="action-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="action-label">Add Bank</div>
+                    <div class="action-subtitle">Link account</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Recent Activity -->
+            <div class="sidebar-card">
+                <div class="card-header">
+                    <h3>Recent Activity</h3>
+                    <a href="#" class="view-all-link">View All</a>
+                </div>
+                
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon money-received">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-title">Money Received</div>
+                            <div class="activity-subtitle">From John Doe</div>
+                            <div class="activity-time">2 hours ago</div>
+                        </div>
+                        <div class="activity-amount positive">+₹1,500</div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon payment-sent">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-title">Payment Sent</div>
+                            <div class="activity-subtitle">To Amazon</div>
+                            <div class="activity-time">5 hours ago</div>
+                        </div>
+                        <div class="activity-amount negative">-₹2,300</div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon bill-payment">
+                            <i class="fas fa-file-invoice"></i>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-title">Bill Payment</div>
+                            <div class="activity-subtitle">Electricity</div>
+                            <div class="activity-time">1 day ago</div>
+                        </div>
+                        <div class="activity-amount negative">-₹850</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Linked Banks -->
+            <div class="sidebar-card">
+                <div class="card-header">
+                    <h3>Linked Banks</h3>
+                    <a href="#" class="add-bank-link">Add Bank</a>
+                </div>
+                
+                <div class="bank-list">
+                    <div class="bank-item">
+                        <div class="bank-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="bank-details">
+                            <div class="bank-name">HDFC Bank</div>
+                            <div class="bank-account">**** **** **** 1234</div>
+                        </div>
+                        <div class="bank-status active">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="bank-item">
+                        <div class="bank-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="bank-details">
+                            <div class="bank-name">ICICI Bank</div>
+                            <div class="bank-account">**** **** **** 5678</div>
+                        </div>
+                        <div class="bank-status active">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="add-bank-card" onclick="addBankAccount()">
+                        <i class="fas fa-plus"></i>
+                        <span>Add New Bank Account</span>
+                        <p>Ask for payment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const searchResults = document.getElementById('searchResults');
+            
+            if (searchTerm.length === 0) {
+                searchResults.style.display = 'none';
+                return;
+            }
+            
+            // Sample search data
+            const searchData = [
+                { type: 'contact', name: 'John Doe', subtitle: 'Contact', icon: 'fas fa-user' },
+                { type: 'contact', name: 'Sarah Smith', subtitle: 'Contact', icon: 'fas fa-user' },
+                { type: 'service', name: 'Mobile Recharge', subtitle: 'Service', icon: 'fas fa-mobile-alt' },
+                { type: 'service', name: 'Bill Payment', subtitle: 'Service', icon: 'fas fa-file-invoice' },
+                { type: 'transaction', name: 'Payment to Amazon', subtitle: 'Transaction', icon: 'fas fa-history' },
+                { type: 'transaction', name: 'Money from John', subtitle: 'Transaction', icon: 'fas fa-history' }
+            ];
+            
+            const filteredResults = searchData.filter(item => 
+                item.name.toLowerCase().includes(searchTerm)
+            );
+            
+            if (filteredResults.length > 0) {
+                searchResults.innerHTML = filteredResults.map(item => `
+                    <div class="search-result-item" onclick="selectSearchResult('${item.type}', '${item.name}')">
+                        <i class="${item.icon}"></i>
+                        <div class="result-details">
+                            <div class="result-name">${item.name}</div>
+                            <div class="result-subtitle">${item.subtitle}</div>
+                        </div>
+                    </div>
+                `).join('');
+                searchResults.style.display = 'block';
+            } else {
+                searchResults.innerHTML = '<div class="no-results">No results found</div>';
+                searchResults.style.display = 'block';
+            }
+        }
+        
+        function selectSearchResult(type, name) {
+            document.getElementById('searchInput').value = name;
+            document.getElementById('searchResults').style.display = 'none';
+            console.log('Selected:', type, name);
+        }
+        
+        // Profile menu toggle
+        function toggleProfileMenu() {
+            const menu = document.getElementById('profileMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        // Close profile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const profileSection = document.querySelector('.profile-section');
+            const profileMenu = document.getElementById('profileMenu');
+            
+            if (!profileSection.contains(event.target)) {
+                profileMenu.style.display = 'none';
+            }
+        });
+        
+        // Hide search results when clicking outside
+        document.addEventListener('click', function(event) {
+            const searchContainer = document.querySelector('.search-container');
+            const searchResults = document.getElementById('searchResults');
+            
+            if (!searchContainer.contains(event.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+        
+        // Balance toggle
+        function toggleBalance() {
+            const balanceAmount = document.getElementById('balanceAmount');
+            const toggleIcon = document.getElementById('balanceToggle');
+            
+            if (balanceAmount.textContent === '₹12,450.00') {
+                balanceAmount.textContent = '₹****.**';
+                toggleIcon.className = 'fas fa-eye-slash';
+            } else {
+                balanceAmount.textContent = '₹12,450.00';
+                toggleIcon.className = 'fas fa-eye';
+            }
+        }
+        
+        // Action functions
+        function scanQR() { console.log('Scan QR clicked'); }
+        function mobileRecharge() { console.log('Mobile Recharge clicked'); }
+        function payBills() { console.log('Pay Bills clicked'); }
+        function addMoney() { console.log('Add Money clicked'); }
+        function withdrawMoney() { console.log('Withdraw Money clicked'); }
+        function addBankAccount() { console.log('Add Bank Account clicked'); }
+        function viewProfile() { console.log('View Profile clicked'); }
+        function viewTransactions() { console.log('View Transactions clicked'); }
+        function viewSettings() { console.log('View Settings clicked'); }
+        function logout() { console.log('Logout clicked'); }
+    </script>
+</body>
+</html>

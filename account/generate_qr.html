@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate QR Code - PaySecure</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        #qrcode {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 12px;
+            display: none;
+        }
+
+        #qrcode canvas {
+            margin: 0 auto;
+        }
+
+        .qr-info {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .qr-info strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔲 Generate QR Code</h1>
+        <p class="subtitle">Create a QR code for receiving payments</p>
+
+        <div class="form-group">
+            <label for="phone">Your Phone Number</label>
+            <input type="tel" id="phone" placeholder="Enter 10-digit phone number" maxlength="10" pattern="[0-9]{10}">
+        </div>
+
+        <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" placeholder="Enter your name">
+        </div>
+
+        <div class="form-group">
+            <label for="amount">Amount (Optional)</label>
+            <input type="number" id="amount" placeholder="Enter amount (leave empty for any amount)" min="0"
+                step="0.01">
+        </div>
+
+        <button onclick="generateQR()">Generate QR Code</button>
+
+        <div id="qrcode"></div>
+    </div>
+
+    <script>
+        function generateQR() {
+            const phone = document.getElementById('phone').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const amount = document.getElementById('amount').value.trim();
+
+            if (!phone || phone.length !== 10) {
+                alert('Please enter a valid 10-digit phone number');
+                return;
+            }
+
+            if (!name) {
+                alert('Please enter your name');
+                return;
+            }
+
+            // Generate VPA (UPI ID) in PaySecure format
+            const vpa = phone + '@paysecure';
+
+            // Create UPI payment string
+            let upiString = `upi://pay?pa=${vpa}&pn=${encodeURIComponent(name)}`;
+            if (amount) {
+                upiString += `&am=${amount}`;
+            }
+            upiString += '&cu=INR';
+
+            // Clear previous QR code
+            const qrDiv = document.getElementById('qrcode');
+            qrDiv.innerHTML = '';
+            qrDiv.style.display = 'block';
+
+            // Generate new QR code
+            new QRCode(qrDiv, {
+                text: upiString,
+                width: 256,
+                height: 256,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            // Add info below QR code
+            const info = document.createElement('div');
+            info.className = 'qr-info';
+            info.innerHTML = `
+                <strong>VPA:</strong> ${vpa}<br>
+                <strong>Name:</strong> ${name}<br>
+                ${amount ? `<strong>Amount:</strong> ₹${amount}<br>` : ''}
+                <br>
+                <small>Scan this QR code with PaySecure Scan & Pay to test payments!</small>
+            `;
+            qrDiv.appendChild(info);
+        }
+    </script>
+</body>
+
+</html>

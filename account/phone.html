@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Send Money - PaySecure</title>
+
+  <link rel="stylesheet" href="paysecure-universal.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #42A5F5 0%, #1976D2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: #222;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .logo i {
+      color: #1d9bf0;
+    }
+
+    .page-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .page-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 24px;
+      font-weight: 700;
+      color: #222;
+      margin: 0 0 30px 0;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      text-decoration: none;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #1d9bf0;
+    }
+
+    .btn-primary {
+      background: #1d9bf0;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-primary:hover {
+      background: #1a8cd8;
+    }
+
+    .btn-secondary {
+      background: #f5f5f5;
+      color: #333;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <a href="homepage_clean.php" class="logo">
+        <i class="fas fa-lock"></i>
+        <span>PaySecure</span>
+      </a>
+    </div>
+
+    <!-- Back Button -->
+    <a href="homepage_clean.php" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+
+    <!-- Send Money Card -->
+    <div class="page-card">
+      <h1 class="page-title">
+        <i class="fas fa-paper-plane"></i>
+        Send Money
+      </h1>
+
+      <form id="sendMoneyForm">
+        <div style="display:flex;gap:12px;margin-bottom:20px">
+          <div style="flex:0 0 160px">
+            <label for="cc">Country</label>
+            <select id="cc" class="form-input">
+              <option value="+91" selected>+91 India</option>
+              <option value="+1">+1 USA</option>
+              <option value="+44">+44 UK</option>
+            </select>
+          </div>
+          <div style="flex:1">
+            <label for="phone">Recipient Phone Number</label>
+            <input type="tel" id="phone" class="form-input" placeholder="Enter 10-digit phone number" maxlength="10"
+              pattern="\\d{10}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="amount">Amount (₹)</label>
+          <input type="number" id="amount" class="form-input" placeholder="Enter amount" min="1" step="0.01">
+        </div>
+
+        <div class="form-group">
+          <label for="note">Note (optional)</label>
+          <input type="text" id="note" class="form-input" placeholder="Add a message (e.g. rent, gift)">
+        </div>
+
+        <div id="formMsg" style="margin-bottom:20px"></div>
+
+        <div style="display:flex;gap:12px">
+          <button type="button" class="btn-primary" onclick="onSendMoneyClick()">
+            <i class="fas fa-paper-plane"></i> Send Money
+          </button>
+          <a href="homepage_clean.php" class="btn-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- UPI PIN Modal -->
+  <div id="upiPinModal"
+    style="display:none;position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;z-index:9999">
+    <div
+      style="width:520px;max-width:92%;background:#fff;border-radius:14px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <strong>Enter UPI PIN</strong>
+        <button id="upiPinClose" style="border:0;background:transparent;font-size:18px;cursor:pointer">&times;</button>
+      </div>
+      <p style="margin:0 0 12px;color:#333">Confirm with your 4-digit UPI PIN to authorize the payment.</p>
+      <input id="upiPinInput" type="password" inputmode="numeric" maxlength="6" placeholder="Enter UPI PIN"
+        style="width:100%;padding:14px;border-radius:10px;border:1px solid #eef6ff;margin-bottom:14px;font-size:18px;letter-spacing:4px" />
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button id="upiPinCancel" class="btn-secondary" type="button">Cancel</button>
+        <button id="upiPinConfirm" class="btn-primary" type="button">Confirm & Pay</button>
+      </div>
+      <div id="upiPinMsg" style="margin-top:10px"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="receipt_utils.js"></script>
+
+  <script>
+    function onSendMoneyClick() {
+      const phone = (document.getElementById('phone').value || '').replace(/\D/g, '');
+      const amount = parseFloat(document.getElementById('amount').value) || 0;
+      const note = (document.getElementById('note').value || '').trim();
+      const cc = (document.getElementById('cc').value || '').trim();
+      const msg = document.getElementById('formMsg');
+
+      msg.innerHTML = '';
+
+      if (phone.length !== 10) {
+        msg.innerHTML = '<div style="color:#d32f2f;font-weight:600">Enter a valid 10-digit phone number.</div>';
+        document.getElementById('phone').focus();
+        return;
+      }
+
+      if (!(amount > 0)) {
+        msg.innerHTML = '<div style="color:#d32f2f;font-weight:600">Enter a valid amount greater than 0.</div>';
+        document.getElementById('amount').focus();
+        return;
+      }
+
+      showUpiPinModal({ amount, phone, cc, note });
+    }
+
+    function showUpiPinModal(payload) {
+      const modal = document.getElementById('upiPinModal');
+      const pinInput = document.getElementById('upiPinInput');
+      const confirmBtn = document.getElementById('upiPinConfirm');
+      const cancelBtn = document.getElementById('upiPinCancel');
+      const closeBtn = document.getElementById('upiPinClose');
+      const msgEl = document.getElementById('upiPinMsg');
+
+      pinInput.value = '';
+      msgEl.innerHTML = '';
+      modal.style.display = 'flex';
+      pinInput.focus();
+
+      function cleanup() {
+        modal.style.display = 'none';
+        confirmBtn.removeEventListener('click', onConfirm);
+        cancelBtn.removeEventListener('click', onCancel);
+        closeBtn.removeEventListener('click', onCancel);
+      }
+
+      function onCancel() {
+        cleanup();
+      }
+
+      function onConfirm() {
+        const pin = (pinInput.value || '').trim();
+
+        if (pin.length < 4) {
+          msgEl.innerHTML = '<div style="color:#d32f2f;font-weight:600">Enter a valid 4-digit UPI PIN.</div>';
+          return;
+        }
+
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = 'Processing...';
+        msgEl.innerHTML = '<div style="color:#1d9bf0;font-weight:600">Authorizing transaction...</div>';
+
+        fetch('process_send_money.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: payload.amount,
+            counterparty_phone: payload.phone,
+            counterparty_country: payload.cc,
+            note: payload.note,
+            pin: pin
+          })
+        }).then(r => r.json()).then(function (res) {
+          confirmBtn.disabled = false;
+          confirmBtn.textContent = 'Confirm & Pay';
+
+          if (res && res.success) {
+            msgEl.innerHTML = '<div style="color:#0b8043;font-weight:700">Payment Successful! ✓</div>';
+
+            setTimeout(() => {
+              cleanup();
+
+              if (window.showReceipt) {
+                window.showReceipt({
+                  success: true,
+                  amount: payload.amount,
+                  transaction_id: res.transaction_id,
+                  date: new Date().toLocaleString(),
+                  recipient: payload.phone,
+                  type: 'Money Transfer'
+                });
+              } else {
+                alert('Payment Successful! TXN: ' + res.transaction_id);
+                window.location.reload();
+              }
+            }, 1500);
+          } else {
+            msgEl.innerHTML = '<div style="color:#d32f2f;font-weight:600">' + (res.error || 'Payment failed') + '</div>';
+          }
+        }).catch(function (err) {
+          console.error('send_payment error', err);
+          confirmBtn.disabled = false;
+          confirmBtn.textContent = 'Confirm & Pay';
+          msgEl.innerHTML = '<div style="color:#d32f2f;font-weight:600">Network error. Please try again.</div>';
+        });
+      }
+
+      confirmBtn.addEventListener('click', onConfirm);
+      cancelBtn.addEventListener('click', onCancel);
+      closeBtn.addEventListener('click', onCancel);
+    }
+  </script>
+</body>
+
+</html>

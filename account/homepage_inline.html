@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayEase - Dashboard</title>
+    
+    <!-- INLINE STYLES - CANNOT BE OVERRIDDEN -->
+    <style>
+        /* NUCLEAR OPTION - INLINE STYLES */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1d9bf0 0%, #1d9bf0 100%);
+            min-height: 100vh;
+            color: #424242;
+            overflow-x: hidden;
+        }
+        
+        /* SUCCESS INDICATOR */
+        body::before {
+            content: "💥 INLINE CSS - CANNOT BE OVERRIDDEN!";
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 999999;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* HEADER */
+        .header {
+            background: white;
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(25, 118, 210, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1d9bf0;
+        }
+        
+        .search-container {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 30px;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 45px 12px 20px;
+            border: 2px solid #F5F5F5;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .search-input:focus {
+            border-color: #1d9bf0;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+        }
+        
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            border-radius: 25px;
+            background: #F5F5F5;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .profile-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #1d9bf0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* MAIN CONTAINER */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 25px;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+        
+        /* BALANCE CARD */
+        .balance-card {
+            background: linear-gradient(135deg, #1d9bf0 0%, #0D47A1 100%);
+            border-radius: 20px;
+            padding: 30px;
+            color: white;
+            box-shadow: 0 8px 30px rgba(25, 118, 210, 0.3);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        .balance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .balance-title {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .balance-amount {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .bank-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* ACTIONS GRID */
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .action-card {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(25, 118, 210, 0.1);
+            border: 2px solid transparent;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(25, 118, 210, 0.2);
+            border-color: #1d9bf0;
+        }
+        
+        .action-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .action-icon.send { background: linear-gradient(135deg, #4CAF50 0%, #66BB6A 100%); }
+        .action-icon.request { background: linear-gradient(135deg, #FF9800 0%, #FFB74D 100%); }
+        .action-icon.scan { background: linear-gradient(135deg, #1d9bf0 0%, #1d9bf0 100%); }
+        .action-icon.recharge { background: linear-gradient(135deg, #9C27B0 0%, #BA68C8 100%); }
+        .action-icon.bills { background: linear-gradient(135deg, #F44336 0%, #EF5350 100%); }
+        .action-icon.bank { background: linear-gradient(135deg, #607D8B 0%, #90A4AE 100%); }
+        
+        .action-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #424242;
+            margin-bottom: 5px;
+        }
+        
+        .action-subtitle {
+            font-size: 12px;
+            color: #9E9E9E;
+        }
+        
+        /* SIDEBAR */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .activity-card, .banks-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(25, 118, 210, 0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #424242;
+        }
+        
+        .view-all {
+            color: #1d9bf0;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+            
+            .sidebar {
+                order: -1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .search-container {
+                display: none;
+            }
+            
+            .actions-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .balance-amount {
+                font-size: 28px;
+            }
+        }
+    </style>
+    
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            🔒 PayEase
+        </div>
+        
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search payments, contacts...">
+        </div>
+        
+        <div class="profile-section">
+            <button class="profile-btn">
+                <div class="profile-avatar">U</div>
+                <span>User</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Balance Card -->
+            <div class="balance-card">
+                <div class="balance-header">
+                    <div class="balance-title">Total Balance</div>
+                    <div class="security-badge">
+                        🛡️ Secured
+                    </div>
+                </div>
+                <div class="balance-amount">₹5,240.50</div>
+                <div class="bank-info">
+                    <div class="bank-details">
+                        <div style="font-size: 14px; font-weight: 600;">HDFC Bank</div>
+                        <div style="font-size: 12px; opacity: 0.8;">••••••1234</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="actions-grid">
+                    <div class="action-card" onclick="alert('Send Money')">
+                        <div class="action-icon send">💸</div>
+                        <div class="action-title">Send Money</div>
+                        <div class="action-subtitle">To contacts</div>
+                    </div>
+                    <div class="action-card" onclick="alert('Request Money')">
+                        <div class="action-icon request">📥</div>
+                        <div class="action-title">Request</div>
+                        <div class="action-subtitle">Ask for payment</div>
+                    </div>
+                    <div class="action-card" onclick="alert('Scan QR')">
+                        <div class="action-icon scan">📱</div>
+                        <div class="action-title">Scan QR</div>
+                        <div class="action-subtitle">Quick payment</div>
+                    </div>
+                    <div class="action-card" onclick="alert('Recharge')">
+                        <div class="action-icon recharge">📞</div>
+                        <div class="action-title">Recharge</div>
+                        <div class="action-subtitle">Mobile & DTH</div>
+                    </div>
+                    <div class="action-card" onclick="alert('Bill Payment')">
+                        <div class="action-icon bills">🧾</div>
+                        <div class="action-title">Bill Payment</div>
+                        <div class="action-subtitle">Utilities</div>
+                    </div>
+                    <div class="action-card" onclick="alert('Add Bank')">
+                        <div class="action-icon bank">🏦</div>
+                        <div class="action-title">Add Bank</div>
+                        <div class="action-subtitle">Link account</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="activity-card">
+                <div class="card-header">
+                    <h3 class="card-title">Recent Activity</h3>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <div style="text-align: center; padding: 20px; color: #9E9E9E;">
+                    💳 Recent transactions will appear here
+                </div>
+            </div>
+
+            <div class="banks-card">
+                <div class="card-header">
+                    <h3 class="card-title">Linked Banks</h3>
+                    <a href="#" class="view-all">Add Bank</a>
+                </div>
+                <div style="text-align: center; padding: 20px; color: #9E9E9E;">
+                    🏦 Your linked banks will appear here
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        console.log("✅ PayEase Homepage loaded successfully!");
+        
+        // Simple click handlers
+        document.querySelectorAll('.action-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+    </script>
+</body>
+</html>

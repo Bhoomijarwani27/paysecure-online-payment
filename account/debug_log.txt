@@ -1,0 +1,29 @@
+Recording Transaction: UserID=9999999999, UserColumn=phone_number, Amount=-10, Type=debit
+Recording Transaction: UserID=8888888888, UserColumn=phone_number, Amount=10, Type=credit
+Recording Transaction: UserID=9999999999, UserColumn=phone_number, Amount=-10, Type=debit
+Params count: 8
+SQL: INSERT INTO transactions (phone_number, amount, tx_type, note, transaction_id, balance_after, reference_id, direction) VALUES (?,?,?,?,?,?,?,?)
+Recording Transaction: UserID=8888888888, UserColumn=phone_number, Amount=10, Type=credit
+Params count: 8
+SQL: INSERT INTO transactions (phone_number, amount, tx_type, note, transaction_id, balance_after, reference_id, direction) VALUES (?,?,?,?,?,?,?,?)
+Recording Transaction: UserID=9999999999, UserColumn=phone_number, Amount=-10, Type=debit
+Params count: 8
+SQL: INSERT INTO transactions (phone_number, amount, tx_type, note, transaction_id, balance_after, reference_id, direction) VALUES (?,?,?,?,?,?,?,?)
+Recording Transaction: UserID=8888888888, UserColumn=phone_number, Amount=10, Type=credit
+Params count: 8
+SQL: INSERT INTO transactions (phone_number, amount, tx_type, note, transaction_id, balance_after, reference_id, direction) VALUES (?,?,?,?,?,?,?,?)
+Recording Transaction: UserID=2345678900, Amount=50, Type=signup_bonus
+Recording Transaction: UserID=7227071273, Amount=50, Type=referral_bonus
+Recording Transaction: UserID=7227071273, Amount=-100, Type=debit
+Recording Transaction: UserID=7227071279, Amount=100, Type=credit
+Recording Transaction: UserID=7227071273, Amount=-10, Type=debit
+Recording Transaction: UserID=7227071279, Amount=10, Type=credit
+Recording Transaction: UserID=1234567899, Amount=-10, Type=debit
+Recording Transaction: UserID=7227071279, Amount=10, Type=credit
+Recording Transaction: UserID=1234567899, Amount=-100, Type=debit
+Recording Transaction: UserID=7227071273, Amount=100, Type=credit
+Recording Transaction: UserID=1234567899, Amount=-10, Type=debit
+Recording Transaction: UserID=7227071279, Amount=10, Type=credit
+Recording Transaction: UserID=8888888888, Amount=-1036, Type=bill_payment
+Recording Transaction: UserID=1234567899, Amount=-10, Type=debit
+Recording Transaction: UserID=7227071273, Amount=10, Type=credit

@@ -1,0 +1,104 @@
+/* --- Global layout for create-account/login pages --- */
+:root{
+  --brand-blue: #1d9bf0;
+  --brand-blue-2: #2e9ef9;
+  --bg-top:#2f9ef5;
+  --bg-bottom:#2b8de6;
+  --card-bg:#ffffff;
+  --muted: rgba(0,0,0,0.55);
+  --radius: 14px;
+  --shadow: 0 12px 36px rgba(11,37,64,0.06);
+}
+
+html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;}
+
+/* page background used by both create & login */
+body.bg{
+  background: linear-gradient(180deg,var(--bg-top) 0%, var(--bg-bottom) 100%);
+  -webkit-font-smoothing:antialiased;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:36px 18px;
+  box-sizing:border-box;
+}
+
+/* top header bar */
+.header, .site-header {
+  width:100%;
+  max-width:1200px;
+  margin:0 auto 28px;
+  background: #f6fbff;
+  border-radius:var(--radius);
+  padding:12px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+}
+
+/* brand */
+.logo{ display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; font-weight:700; }
+.logo i{ width:56px;height:56px;border-radius:10px; display:flex;align-items:center;justify-content:center; background:linear-gradient(135deg,var(--brand-blue),var(--brand-blue-2)); color:#fff; font-size:20px; }
+.logo .pay{ color:#0b2540; font-weight:800; font-size:20px; margin-left:6px; }
+.logo .secure{ color:var(--brand-blue); font-weight:800; font-size:20px; }
+
+/* page container for centered content */
+.page-container{ width:100%; max-width:1100px; margin:0 auto; }
+
+/* two-column auth layout (login style with image) */
+.auth-grid{
+  display:grid;
+  grid-template-columns:420px 1fr;
+  gap:28px;
+  align-items:center;
+}
+
+/* the left card (form) */
+.form-box, .login-card, .create-card, .page-card{
+  background:var(--card-bg);
+  border-radius:12px;
+  padding:28px;
+  box-shadow:var(--shadow);
+}
+
+/* form visuals */
+.form-box{ max-width:420px; margin:0 auto; text-align:left; }
+.form-box h1{ margin:0 0 6px; font-size:20px; font-weight:800; }
+.form-box h4{ margin:0 0 18px; font-weight:600; color:var(--muted); font-size:13px; }
+
+.form-group{ width:100%; margin:10px 0; }
+.form-group input,
+.form-input{
+  padding:12px 14px; width:100%; border-radius:8px; border:1px solid #e6eef9; font-size:14px; box-sizing:border-box; height:44px;
+}
+.form-group input:focus{ outline:3px solid rgba(29,155,240,0.12); outline-offset:2px; }
+
+/* phone group */
+.phone-group{ display:flex; gap:10px; margin:8px 0 14px; align-items:center; }
+.phone-group select{ flex:0 0 90px; padding:10px 12px; border-radius:8px; border:1px solid #e6eef9; background:#fff; height:44px; }
+.phone-group input{ flex:1; padding:12px 14px; }
+
+/* primary button */
+.butn, .btn-primary{
+  display:block; width:100%; padding:12px 14px; border-radius:10px; border:0;
+  background: linear-gradient(90deg,var(--brand-blue-2),var(--brand-blue)); color:#fff; font-weight:700; cursor:pointer;
+  box-shadow: 0 8px 22px rgba(30,120,220,0.12);
+  margin-top:10px;
+}
+
+/* small link text under form */
+.login-link{ text-align:center; margin-top:12px; color:var(--muted); }
+.login-link a{ color:var(--brand-blue); text-decoration:none; font-weight:700; }
+
+/* right-side image / promo */
+.login-image{ display:flex; align-items:center; justify-content:center; }
+.login-image img{ width:100%; height:auto; border-radius:12px; box-shadow:0 8px 32px rgba(25,118,210,0.12); }
+
+/* responsive: stack columns on narrow screens */
+@media (max-width:920px){
+  .auth-grid{ grid-template-columns:1fr; padding:0 12px; }
+  .login-image{ order:-1; margin-bottom:10px; }
+  .header{ margin-bottom:18px; }
+}
+

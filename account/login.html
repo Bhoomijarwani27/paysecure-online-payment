@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaySecure - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="paysecure-universal.css?v=2">
+    <style>
+        /* Homepage-style header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .logo .pay {
+            color: #333;
+        }
+
+        .logo .secure {
+            color: #1d9bf0;
+        }
+
+        .help-text {
+            color: #1d9bf0;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(29, 155, 240, 0.2);
+        }
+
+        .help-text:hover {
+            background: rgba(29, 155, 240, 0.1);
+            color: #1d9bf0;
+        }
+        
+
+
+        .login-container {
+            display: flex;
+            align-items: center;
+            min-height: 80vh;
+            gap: 40px;
+        }
+        
+        .login-card {
+            flex: 1;
+            max-width: 400px;
+        }
+        
+        .login-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .login-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
+        }
+        
+        .help-text {
+            color: #1d9bf0;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .help-text:hover {
+            color: #1d9bf0;
+        }
+        
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-lock" style="color: #1d9bf0;"></i>
+                <span class="pay">pay</span><span class="secure">secure</span>
+            </div>
+            
+            <div class="header-spacer" style="flex: 1;"></div>
+            
+            <div class="help-section">
+                <a href="help.html" class="help-text">
+                    <i class="fas fa-question-circle"></i>
+                    Help & Support
+                </a>
+            </div>
+        </header>
+        
+        <!-- Login Content -->
+        <div class="login-container">
+            <div class="login-card">
+                <div class="page-card">
+                    <h2 class="page-title">Welcome Back</h2>
+                                    <div id="loginError" style="display:none; margin-bottom:12px; color:#b00020; background:#ffecec; padding:10px; border-radius:6px;">
+                                        <strong>Error:</strong> <span id="loginErrorText"></span>
+                                    </div>
+                    <form method="post" action="http://localhost/online_payment/account/login.php" id="loginForm">
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <div style="display:flex; gap:8px; align-items:center;">
+                                <div style="flex:0 0 120px;">
+                                    <select id="countryCodeSelect" name="country_code" class="form-input" style="padding:8px 10px; height:40px;">
+                                            <option value="+91">+91</option>
+                                            <option value="+1">+1</option>
+                                            <option value="+44">+44</option>
+                                    </select>
+                                </div>
+                                <div style="flex:1">
+                                    <input type="tel" id="phoneNumberInput" name="phone_number" class="form-input" placeholder="Enter your phone number" required pattern="\d{10}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password" class="form-input" placeholder="Enter your password" required>
+                        </div>
+                        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px;">
+                            Login to PaySecure
+                        </button>
+                        <script>
+                            // Prevent submitting the form when page is opened via file://
+                            (function(){
+                                const form = document.getElementById('loginForm');
+                                form.addEventListener('submit', function(e){
+                                    if (window.location.protocol === 'file:') {
+                                        e.preventDefault();
+                                        alert('Please open this page via http://localhost/online_payment/account/login.html (start Apache/XAMPP). Opening files directly (file://) will not run PHP.');
+                                        return false;
+                                    }
+                                });
+                                // Read query params to show errors and prefill fields
+                                const params = new URLSearchParams(window.location.search);
+                                if (params.has('error')) {
+                                    const err = params.get('error');
+                                    document.getElementById('loginErrorText').textContent = err;
+                                    document.getElementById('loginError').style.display = 'block';
+                                }
+                                if (params.has('country_code')) {
+                                    const cc = params.get('country_code');
+                                    const sel = document.getElementById('countryCodeSelect');
+                                    if (sel) {
+                                        // If the value exists in the list, select it; otherwise add it and select
+                                        let opt = Array.from(sel.options).find(o => o.value === cc);
+                                        if (!opt) {
+                                            const o = document.createElement('option');
+                                            o.value = cc;
+                                            o.text = cc;
+                                            sel.appendChild(o);
+                                            sel.value = cc;
+                                        } else {
+                                            sel.value = cc;
+                                        }
+                                    }
+                                }
+                                if (params.has('phone_number')) {
+                                    const phoneEl = document.getElementById('phoneNumberInput');
+                                    if (phoneEl) phoneEl.value = params.get('phone_number');
+                                }
+                            })();
+                        </script>
+                        <div style="text-align: center; margin-top: 15px;">
+                            <a href="forgot_password.php" style="color: #1d9bf0; text-decoration: none; font-size: 14px; font-weight: 500;">
+                                <i class="fas fa-key"></i> Forgot Password?
+                            </a>
+                        </div>
+                        <p style="text-align: center; margin-top: 20px; color: #666;">
+                            Don't have an account? 
+                            <a href="create_account.html" style="color: #1d9bf0; text-decoration: none; font-weight: 500;">Sign Up</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="login-image">
+                <img src="image.jpg" alt="PaySecure Login">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

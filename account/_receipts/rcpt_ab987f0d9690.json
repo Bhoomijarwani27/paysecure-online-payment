@@ -1,0 +1,1 @@
+{"id":"rcpt_ab987f0d9690","from":"Demo User","to":"9876543210","amount":50,"currency":"INR","note":"Test payment","created_at":"2025-11-19 14:54:11","tx_sender":{"tx_type":"debit","counterparty":"9876543210","amount":50,"currency":"INR","direction":"out","note":"Test payment","created_at":"2025-11-19 14:54:11"},"tx_recipient":null}

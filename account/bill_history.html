@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Payment History - PaySecure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Match Homepage Styling */
+        body {
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #42A5F5 0%, #1976D2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .page-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #222;
+            margin: 0 0 30px 0;
+        }
+
+        /* Filter controls */
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: 2px solid #f0f0f0;
+            background: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+            border-color: #1d9bf0;
+            outline: none;
+        }
+
+        /* Transaction list */
+        .transaction-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .transaction-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #1d9bf0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .transaction-item:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            transform: translateY(-1px);
+        }
+
+        .transaction-item.bill-payment {
+            border-left-color: #ff6b35;
+        }
+
+        .transaction-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .transaction-info {
+            flex: 1;
+        }
+
+        .transaction-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .transaction-details {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .transaction-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .transaction-amount {
+            font-size: 18px;
+            font-weight: 700;
+            color: #d32f2f;
+        }
+
+        .transaction-amount.positive {
+            color: #388e3c;
+        }
+
+        .transaction-date {
+            font-size: 12px;
+            color: #999;
+            text-align: right;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        /* Back button */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            text-decoration: none;
+            margin-bottom: 16px;
+            font-weight: 600;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            opacity: 1;
+            transform: translateX(-2px);
+        }
+
+        /* Loading state */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .loading i {
+            font-size: 24px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .transaction-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .transaction-amount {
+                margin-top: 8px;
+            }
+
+            .filter-controls {
+                flex-direction: column;
+            }
+
+            .filter-select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Back link -->
+        <a href="bill_pay.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Bill Payments
+        </a>
+
+        <!-- Main content card -->
+        <div class="page-card">
+            <h1 class="page-title">
+                <i class="fas fa-history" style="color: #1d9bf0;"></i>
+                Bill Payment History
+            </h1>
+
+            <!-- Filter controls -->
+            <div class="filter-controls">
+                <select id="billTypeFilter" class="filter-select">
+                    <option value="">All Bill Types</option>
+                    <option value="electricity">Electricity</option>
+                    <option value="water">Water</option>
+                    <option value="gas">Gas</option>
+                    <option value="internet">Internet & DTH</option>
+                    <option value="mobile">Mobile</option>
+                    <option value="insurance">Insurance</option>
+                </select>
+
+                <select id="periodFilter" class="filter-select">
+                    <option value="30">Last 30 days</option>
+                    <option value="90">Last 3 months</option>
+                    <option value="365">Last year</option>
+                    <option value="">All time</option>
+                </select>
+
+                <select id="statusFilter" class="filter-select">
+                    <option value="">All Status</option>
+                    <option value="completed">Completed</option>
+                    <option value="pending">Pending</option>
+                    <option value="failed">Failed</option>
+                </select>
+            </div>
+
+            <!-- Transaction list -->
+            <div id="transactionList" class="transaction-list">
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <div>Loading bill payment history...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allTransactions = [];
+
+        // Load transaction history on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBillHistory();
+            
+            // Add event listeners for filters
+            document.getElementById('billTypeFilter').addEventListener('change', applyFilters);
+            document.getElementById('periodFilter').addEventListener('change', applyFilters);
+            document.getElementById('statusFilter').addEventListener('change', applyFilters);
+        });
+
+        function loadBillHistory() {
+            fetch('get_bill_history.php', {
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Bill history loaded:', data);
+                
+                if (data.success) {
+                    allTransactions = data.transactions || [];
+                    displayTransactions(allTransactions);
+                } else {
+                    showError('Failed to load history: ' + (data.error || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                console.error('Error loading bill history:', error);
+                showError('Network error: ' + error.message);
+            });
+        }
+
+        function displayTransactions(transactions) {
+            const listContainer = document.getElementById('transactionList');
+            
+            if (!transactions || transactions.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-file-invoice"></i>
+                        <h3>No Bill Payments Found</h3>
+                        <p>You haven't made any bill payments yet.</p>
+                        <a href="bill_pay.html" style="color: #1d9bf0; text-decoration: none; font-weight: 600;">
+                            Make your first bill payment →
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            listContainer.innerHTML = transactions.map(tx => {
+                const isPositive = parseFloat(tx.amount) > 0;
+                const amountClass = isPositive ? 'positive' : '';
+                const icon = getBillTypeIcon(tx.bill_type);
+                
+                return `
+                    <div class="transaction-item bill-payment">
+                        <div class="transaction-header">
+                            <div class="transaction-info">
+                                <div class="transaction-title">
+                                    <i class="${icon}" style="margin-right: 8px; color: #ff6b35;"></i>
+                                    ${tx.provider || 'Bill Payment'}
+                                </div>
+                                <div class="transaction-details">
+                                    ${tx.description || 'Bill payment transaction'}
+                                    ${tx.account_number ? `<br><small>Account: ${tx.account_number}</small>` : ''}
+                                </div>
+                                <div class="transaction-meta">
+                                    <span><i class="fas fa-calendar"></i> ${formatDate(tx.created_at)}</span>
+                                    <span><i class="fas fa-receipt"></i> ${tx.transaction_id}</span>
+                                    <span class="status status-${tx.status}"><i class="fas fa-circle"></i> ${tx.status}</span>
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div class="transaction-amount ${amountClass}">
+                                    ${isPositive ? '+' : ''}₹${Math.abs(parseFloat(tx.amount)).toFixed(2)}
+                                </div>
+                                <div class="transaction-date">
+                                    ${formatTime(tx.created_at)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getBillTypeIcon(billType) {
+            const icons = {
+                electricity: 'fas fa-bolt',
+                water: 'fas fa-tint',
+                gas: 'fas fa-fire',
+                internet: 'fas fa-wifi',
+                mobile: 'fas fa-mobile-alt',
+                insurance: 'fas fa-shield-alt'
+            };
+            return icons[billType] || 'fas fa-file-invoice-dollar';
+        }
+
+        function applyFilters() {
+            const billTypeFilter = document.getElementById('billTypeFilter').value;
+            const periodFilter = document.getElementById('periodFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            
+            let filteredTransactions = [...allTransactions];
+            
+            // Apply bill type filter
+            if (billTypeFilter) {
+                filteredTransactions = filteredTransactions.filter(tx => 
+                    tx.bill_type === billTypeFilter
+                );
+            }
+            
+            // Apply period filter
+            if (periodFilter) {
+                const cutoffDate = new Date();
+                cutoffDate.setDate(cutoffDate.getDate() - parseInt(periodFilter));
+                
+                filteredTransactions = filteredTransactions.filter(tx => 
+                    new Date(tx.created_at) >= cutoffDate
+                );
+            }
+            
+            // Apply status filter
+            if (statusFilter) {
+                filteredTransactions = filteredTransactions.filter(tx => 
+                    tx.status === statusFilter
+                );
+            }
+            
+            displayTransactions(filteredTransactions);
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-IN', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function formatTime(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleTimeString('en-IN', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function showError(message) {
+            const listContainer = document.getElementById('transactionList');
+            listContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-exclamation-triangle" style="color: #f44336;"></i>
+                    <h3>Error Loading History</h3>
+                    <p>${message}</p>
+                    <button onclick="loadBillHistory()" style="padding: 10px 20px; background: #1d9bf0; color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 16px;">
+                        Try Again
+                    </button>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

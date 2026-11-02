@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PaySecure - Link Bank Account</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="paysecure-universal.css?v=2">
+  <style>
+    .bank-link-container {
+      max-width: 450px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .bank-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #1d9bf0 0%, #1d9bf0 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 32px;
+      color: white;
+      box-shadow: 0 8px 24px rgba(25, 118, 210, 0.3);
+    }
+
+    .benefit-list {
+      background: rgba(25, 118, 210, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 25px 0;
+      text-align: left;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .benefit-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .benefit-item i {
+      color: #1d9bf0;
+      margin-right: 12px;
+      font-size: 16px;
+      width: 20px;
+    }
+
+    .skip-info {
+      color: #666;
+      font-size: 13px;
+      margin-top: 15px;
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <i class="fa-solid fa-lock"></i>
+        <span class="pay">pay</span><span class="secure">secure</span>
+      </div>
+      <div class="help-link-header">
+        <a href="help.html" class="help-text">Help?</a>
+      </div>
+    </div>
+
+    <!-- Back Button -->
+    <a href="javascript:history.back()" class="back-btn">
+      <i class="fas fa-arrow-left"></i>
+      Back
+    </a>
+
+    <!-- Bank Link Content -->
+    <div class="bank-link-container">
+      <div class="page-card">
+        <div class="bank-icon">
+          <i class="fas fa-university"></i>
+        </div>
+
+        <h2 class="page-title">Link Your Bank Account</h2>
+        <p class="subtitle">Securely connect your bank account to enable seamless transactions</p>
+
+        <div class="benefit-list">
+          <div class="benefit-item">
+            <i class="fas fa-check-circle"></i>
+            <span>Instant money transfers</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-shield-alt"></i>
+            <span>Bank-grade security</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-clock"></i>
+            <span>24/7 transaction support</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-mobile-alt"></i>
+            <span>UPI payments enabled</span>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="window.location.href='select_bank.html'"
+          style="width: 100%; margin-bottom: 15px;">
+          <i class="fas fa-university" style="margin-right: 8px;"></i>
+          Connect Bank Account
+        </button>
+
+        <button class="btn-secondary" onclick="window.location.href='homepage_clean.php'" style="width: 100%;">
+          <i class="fas fa-clock" style="margin-right: 8px;"></i>
+          Skip for Now
+        </button>
+
+        <p class="skip-info">
+          You can link your bank account later from Settings
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

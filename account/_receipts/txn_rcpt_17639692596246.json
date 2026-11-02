@@ -1,0 +1,10 @@
+{
+    "transaction_id": "TXN17639692596246",
+    "recipient_phone": "7227071279",
+    "recipient_name": "Bhoomi Jarwani",
+    "amount": 10,
+    "note": "Payment",
+    "date": "2025-11-24 08:27:39",
+    "new_balance": 8850,
+    "status": "completed"
+}

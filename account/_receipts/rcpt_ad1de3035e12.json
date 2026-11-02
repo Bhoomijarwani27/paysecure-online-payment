@@ -1,0 +1,1 @@
+{"id":"rcpt_ad1de3035e12","from":"Demo User","to":"1234567890","amount":20,"currency":"INR","note":"","created_at":"2025-11-19 16:02:28","tx_sender":{"tx_type":"debit","counterparty":"1234567890","amount":20,"currency":"INR","direction":"out","note":"Payment to 1234567890","created_at":"2025-11-19 16:02:28"},"tx_recipient":null}

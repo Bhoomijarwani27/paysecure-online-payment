@@ -1,0 +1,702 @@
+/* PayEase Homepage - FORCE OVERRIDE ALL STYLES */
+/* Last Updated: 2025-09-30 02:00 - COMPLETE OVERRIDE */
+/* Version: 3.0 - FORCE LOAD WITH !IMPORTANT */
+
+/* COMPLETE CSS RESET - OVERRIDE EVERYTHING */
+* {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+:root {
+    --blue-primary: #1d9bf0;
+    --blue-light: #1d9bf0;
+    --blue-dark: #0D47A1;
+    --white: #FFFFFF;
+    --light-gray: #F5F5F5;
+    --medium-gray: #9E9E9E;
+    --dark-gray: #424242;
+    --success: #4CAF50;
+    --warning: #FF9800;
+    --error: #F44336;
+    --shadow: rgba(25, 118, 210, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue-primary) 100%) !important;
+    min-height: 100vh !important;
+    color: var(--dark-gray) !important;
+    overflow-x: hidden !important;
+    position: relative !important;
+}
+
+/* FORCE OVERRIDE INDICATOR - Will show if CSS loads properly */
+body::before {
+    content: "🚀 PAYEASE V3.0 LOADED SUCCESSFULLY!" !important;
+    position: fixed !important;
+    top: 10px !important;
+    left: 10px !important;
+    background: #FF4444 !important;
+    color: white !important;
+    padding: 8px 16px !important;
+    border-radius: 25px !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    z-index: 99999 !important;
+    animation: forceShow 5s ease-in-out !important;
+    box-shadow: 0 4px 20px rgba(255, 68, 68, 0.3) !important;
+}
+
+@keyframes forceShow {
+    0% { opacity: 0; transform: translateY(-30px) scale(0.8); }
+    15% { opacity: 1; transform: translateY(0) scale(1.1); }
+    20% { transform: scale(1); }
+    85% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-30px) scale(0.8); }
+}
+
+/* Modern Header with PaySecure Style - FORCE OVERRIDE */
+.header {
+    background: var(--white) !important;
+    padding: 20px 25px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    box-shadow: 0 4px 20px var(--shadow) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+    width: 100% !important;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--blue-primary);
+}
+
+.logo i {
+    font-size: 28px;
+    color: var(--blue-primary);
+}
+
+.search-container {
+    flex: 1;
+    max-width: 400px;
+    margin: 0 30px;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 45px 12px 20px;
+    border: 2px solid var(--light-gray);
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: var(--blue-primary);
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--medium-gray);
+    font-size: 20px;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.notifications {
+    position: relative;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    background: var(--light-gray);
+    transition: all 0.3s ease;
+}
+
+.notifications:hover {
+    background: var(--blue-primary);
+    color: var(--white);
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 15px;
+    border-radius: 25px;
+    background: var(--light-gray);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.profile-btn:hover {
+    background: var(--blue-primary);
+    color: var(--white);
+}
+
+.profile-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: var(--blue-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-weight: bold;
+}
+
+/* Main Container */
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 25px;
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 30px;
+}
+
+/* Balance Card - PaySecure Style */
+.balance-card {
+    background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-dark) 100%);
+    border-radius: 20px;
+    padding: 30px;
+    color: var(--white);
+    box-shadow: 0 8px 30px var(--shadow);
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.balance-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+.balance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.balance-title {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+.security-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.balance-amount {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.bank-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.bank-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.bank-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.account-number {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+/* Quick Actions - Modern Grid */
+.quick-actions {
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 20px;
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.action-card {
+    background: var(--white);
+    padding: 25px 20px;
+    border-radius: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px var(--shadow);
+    border: 2px solid transparent;
+}
+
+.action-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px var(--shadow);
+    border-color: var(--blue-light);
+}
+
+.action-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 15px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--white);
+}
+
+.action-icon.send { background: linear-gradient(135deg, var(--success) 0%, #66BB6A 100%); }
+.action-icon.request { background: linear-gradient(135deg, var(--warning) 0%, #FFB74D 100%); }
+.action-icon.scan { background: linear-gradient(135deg, var(--blue-primary) 0%, var(--blue-light) 100%); }
+.action-icon.recharge { background: linear-gradient(135deg, #9C27B0 0%, #BA68C8 100%); }
+.action-icon.bills { background: linear-gradient(135deg, var(--error) 0%, #EF5350 100%); }
+.action-icon.bank { background: linear-gradient(135deg, #607D8B 0%, #90A4AE 100%); }
+
+.action-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-gray);
+    margin-bottom: 5px;
+}
+
+.action-subtitle {
+    font-size: 12px;
+    color: var(--medium-gray);
+}
+
+/* Sidebar */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Recent Activity Card */
+.activity-card, .banks-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 4px 20px var(--shadow);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark-gray);
+}
+
+.view-all {
+    color: var(--blue-primary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.view-all:hover {
+    color: var(--blue-dark);
+}
+
+/* Transaction Items */
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 12px;
+    background: var(--light-gray);
+    transition: all 0.3s ease;
+}
+
+.activity-item:hover {
+    background: rgba(25, 118, 210, 0.05);
+    transform: translateX(5px);
+}
+
+.activity-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 18px;
+}
+
+.activity-icon.received { background: var(--success); }
+.activity-icon.sent { background: var(--error); }
+.activity-icon.pending { background: var(--warning); }
+
+.activity-details {
+    flex: 1;
+}
+
+.activity-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-gray);
+    margin-bottom: 3px;
+}
+
+.activity-subtitle {
+    font-size: 12px;
+    color: var(--medium-gray);
+}
+
+.activity-amount {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.activity-amount.positive {
+    color: var(--success);
+}
+
+.activity-amount.negative {
+    color: var(--error);
+}
+
+/* Bank Cards */
+.bank-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.bank-card {
+    padding: 20px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--light-gray) 0%, #E3F2FD 100%);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.bank-card:hover, .bank-card.active {
+    border-color: var(--blue-primary);
+    background: linear-gradient(135deg, #E3F2FD 0%, rgba(25, 118, 210, 0.1) 100%);
+}
+
+.bank-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.bank-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark-gray);
+}
+
+.status-icon {
+    font-size: 20px;
+}
+
+.status-icon.verified {
+    color: var(--success);
+}
+
+.status-icon.pending {
+    color: var(--warning);
+}
+
+.account-number {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: var(--medium-gray);
+    margin-bottom: 15px;
+}
+
+.bank-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.action-btn.primary {
+    background: var(--blue-primary);
+    color: var(--white);
+}
+
+.action-btn.primary:hover {
+    background: var(--blue-dark);
+}
+
+.action-btn.secondary {
+    background: var(--light-gray);
+    color: var(--dark-gray);
+}
+
+.action-btn.secondary:hover {
+    background: var(--medium-gray);
+    color: var(--white);
+}
+
+/* Add Bank Button */
+.add-bank-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    border: 2px dashed var(--blue-primary);
+    border-radius: 12px;
+    background: transparent;
+    color: var(--blue-primary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-bank-btn:hover {
+    background: rgba(25, 118, 210, 0.05);
+    border-style: solid;
+}
+
+/* Notifications and Interactive Elements */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 12px;
+    background: var(--white);
+    box-shadow: 0 8px 30px var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateX(400px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    border-left: 4px solid var(--success);
+}
+
+.notification.error {
+    border-left: 4px solid var(--error);
+}
+
+.notification.info {
+    border-left: 4px solid var(--blue-primary);
+}
+
+/* Search Results */
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px var(--shadow);
+    margin-top: 5px;
+    display: none;
+    z-index: 100;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.search-result-item:hover {
+    background: var(--light-gray);
+}
+
+/* Profile Menu */
+.profile-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px var(--shadow);
+    margin-top: 10px;
+    min-width: 200px;
+    display: none;
+    z-index: 100;
+}
+
+.profile-menu.show {
+    display: block;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    color: var(--dark-gray);
+    text-decoration: none;
+}
+
+.menu-item:hover {
+    background: var(--light-gray);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .main-container {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+    
+    .sidebar {
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 15px 20px;
+    }
+    
+    .search-container {
+        display: none;
+    }
+    
+    .actions-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .balance-card {
+        padding: 25px 20px;
+    }
+    
+    .balance-amount {
+        font-size: 28px;
+    }
+    
+    .main-container {
+        padding: 15px;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 15px;
+    }
+    
+    .logo {
+        font-size: 20px;
+    }
+    
+    .profile-section {
+        gap: 10px;
+    }
+    
+    .actions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-card {
+        padding: 20px;
+    }
+    
+    .balance-amount {
+        font-size: 24px;
+    }
+    
+    .activity-card, .banks-card {
+        padding: 20px;
+    }
+}

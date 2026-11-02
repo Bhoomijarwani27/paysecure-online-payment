@@ -1,0 +1,11 @@
+{
+    "transaction_id": "BILF03F195909D4",
+    "bill_type": "electricity",
+    "provider": "MSEB",
+    "account_number": "12344565",
+    "customer_name": "bhjkjkj",
+    "amount": 1036,
+    "payment_date": "2025-11-24 08:37:33",
+    "new_balance": 604,
+    "status": "completed"
+}

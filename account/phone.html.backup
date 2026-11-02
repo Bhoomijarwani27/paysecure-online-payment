@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Send Money — PaySecure</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* BEAUTIFUL GRADIENT BACKGROUND - Match Homepage Design */
+    body {
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #42A5F5 0%, #1976D2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Page container - with proper margins */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    /* Header - Clean modern styling - Match homepage exactly */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 20px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
+      margin: 0 40px 24px 40px !important;
+      width: calc(100% - 80px) !important;
+      box-sizing: border-box !important;
+      min-height: 76px !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      backdrop-filter: blur(10px) !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .site-header:hover {
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+      transform: translateY(-1px) !important;
+    }
+
+    /* Logo styling - Match homepage exactly */
+    .logo {
+      display: flex !important;
+      align-items: center !important;
+      gap: 0 !important;
+      text-decoration: none !important;
+      color: inherit !important;
+    }
+
+    .logo i,
+    .logo .fas,
+    .logo .fa-lock {
+      color: #1d9bf0 !important;
+      font-size: 24px !important;
+      margin-right: 8px !important;
+    }
+
+    .logo .pay {
+      font-weight: 700 !important;
+      font-size: 24px !important;
+      color: #222 !important;
+      margin-right: 0 !important;
+    }
+
+    .logo .secure {
+      font-weight: 700 !important;
+      font-size: 24px !important;
+      color: #1d9bf0 !important;
+      margin-left: 0 !important;
+    }
+
+    .brand {
+      line-height: 1;
+    }
+
+    .brand-tag {
+      font-size: 11px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    /* Header actions - Simplified */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Card styling - Match homepage */
+    .page-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
+      margin-bottom: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #222;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .title-icon {
+      color: #1976D2;
+      font-size: 24px;
+    }
+
+    /* Back Button Styling */
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      text-decoration: none;
+      margin: 0 40px 16px 40px;
+      font-weight: 600;
+      opacity: 0.9;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+      opacity: 1;
+      transform: translateX(-2px);
+    }
+
+    /* Help Link Styling */
+    .help-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #1976D2;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .help-link:hover {
+      color: #1565C0;
+      transform: translateY(-1px);
+    }
+
+    /* Form Styling - Modern and Beautiful */
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 16px;
+      font-family: inherit;
+      transition: all 0.3s ease;
+      background: white;
+      box-sizing: border-box;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #1976D2;
+      box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.1);
+      background: #f8fbff;
+    }
+
+    .form-input:hover {
+      border-color: #bbb;
+    }
+
+    .form-input::placeholder {
+      color: #999;
+    }
+
+    /* Button Styling - Premium Look */
+    .btn-primary {
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #1976D2 0%, #1565C0 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+      background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
+    }
+
+    .btn-secondary {
+      padding: 14px 28px;
+      background: white;
+      color: #1976D2;
+      border: 2px solid #1976D2;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-secondary:hover {
+      background: #f0f7ff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.2);
+    }
+
+    .btn-secondary:active {
+      transform: translateY(0);
+    }
+
+    /* Animation for balance updates */
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.1);
+        background: #d4edda;
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* QR Scanner Modal */
+    .qr-scanner-modal {
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 20000;
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    .qr-scanner-box {
+      width: 400px;
+      max-width: 90%;
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .qr-video {
+      width: 100%;
+      max-width: 320px;
+      height: 240px;
+      border-radius: 12px;
+      background: #f0f0f0;
+      margin: 16px 0;
+    }
+
+    .qr-overlay {
+      position: relative;
+      display: inline-block;
+    }
+
+    .qr-crosshair {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
+      border: 2px solid #1d9bf0;
+      border-radius: 12px;
+      pointer-events: none;
+    }
+
+    .qr-crosshair::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      border-radius: 12px;
+      animation: qr-scan 2s ease-in-out infinite;
+    }
+
+    @keyframes qr-scan {
+
+      0%,
+      100% {
+        opacity: 0.5;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .qr-upload-section {
+      padding: 20px;
+      text-align: center;
+      border-top: 1px solid #ddd;
+      margin-top: 20px;
+    }
+
+    .photo-upload-btn {
+      background: linear-gradient(45deg, #1d9bf0 0%, #1d9bf0 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .photo-upload-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    #photoFileInput {
+      display: none;
+    }
+
+    .upload-status {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      display: none;
+      font-weight: 600;
+    }
+
+    .upload-status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .upload-status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .upload-status.processing {
+      background: #cce7ff;
+      color: #0066cc;
+      border: 1px solid #99d6ff;
+    }
+
+    /* responsive */
+    @media (max-width:560px) {
+      .brand-name {
+        font-size: 20px
+      }
+
+      .logo-lock {
+        font-size: 38px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- HEADER -->
+    <header class="site-header" role="banner" aria-label="Main header">
+      <a class="logo" href="/online_payment/index.php" aria-label="PaySecure home">
+        <i class="fa-solid fa-lock logo-lock" aria-hidden="true"></i>
+        <div class="brand">
+          <div class="brand-name"><span class="pay">pay</span><span class="secure">secure</span></div>
+          <div class="brand-tag">Fast • Secure • Simple</div>
+        </div>
+      </a>
+
+      <div style="flex: 1;"></div>
+
+      <div class="header-actions" role="group" aria-label="Header actions">
+        <a href="help.html" class="help-link" title="Help & Support">
+          <i class="fas fa-question-circle"></i>
+          Help & Support
+        </a>
+      </div>
+    </header>
+
+    <!-- Back -->
+    <a href="homepage_v1.php" class="back-button"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
+
+    <!-- SEND MONEY CARD -->
+    <section class="page-card" aria-labelledby="sendMoneyHeading">
+      <div class="card-head">
+        <h2 id="sendMoneyHeading" class="page-title">
+          <i class="fa-solid fa-paper-plane title-icon" aria-hidden="true"></i>
+          Send Money
+        </h2>
+
+        <div style="display:flex;gap:8px;align-items:center">
+          <a href="help.html" class="btn-secondary"
+            style="text-decoration:none;display:inline-flex;align-items:center;gap:6px" title="Help & Support">
+            <i class="fas fa-question-circle"></i>
+            Help & Support
+          </a>
+        </div>
+      </div>
+
+      <form id="sendMoneyForm" action="send_payment_fallback.php" method="POST" novalidate>
+        <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:12px">
+          <div style="flex:0 0 160px">
+            <label for="cc">Country</label>
+            <select id="cc" name="COUNTRYCODE" class="form-input" required>
+              <option value="+91" selected>+91 India</option>
+              <option value="+1">+1 USA</option>
+              <option value="+44">+44 UK</option>
+              <option value="+61">+61 Australia</option>
+            </select>
+          </div>
+
+          <div style="flex:1">
+            <label for="phone">Recipient Phone Number</label>
+            <input type="tel" id="phone" name="PHONENO" class="form-input" placeholder="Enter 10-digit phone number"
+              required inputmode="numeric" pattern="\d{10}" minlength="10" maxlength="10"
+              title="Enter a 10-digit phone number" oninput="this.value = this.value.replace(/\D/g,'').slice(0,10)" />
+          </div>
+        </div>
+
+        <div style="margin-bottom:12px">
+          <label for="amount">Amount (₹)</label>
+          <input type="number" id="amount" name="AMOUNT" class="form-input" placeholder="Enter amount" min="1"
+            step="0.01" required />
+        </div>
+
+        <div style="margin-bottom:18px">
+          <label for="note">Note (optional)</label>
+          <input type="text" id="note" name="NOTE" class="form-input" placeholder="Add a message (e.g. rent, gift)" />
+          <small style="color:#666;font-size:12px;margin-top:4px;display:block">💡 Need help? <a href="help.html"
+              style="color:#1d9bf0;text-decoration:none">Visit our help page</a> for step-by-step guidance.</small>
+        </div>
+
+        <div id="formMsg" aria-live="polite" style="margin-bottom:12px"></div>
+
+        <div style="display:flex;gap:12px;align-items:center">
+          <button type="button" id="sendMoneyBtn" class="btn-primary" onclick="onSendMoneyClick()"><i
+              class="fa-solid fa-paper-plane" style="margin-right:8px"></i> Send Money</button>
+          <a class="btn-secondary" href="javascript:history.back()">Cancel</a>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <!-- QR Scanner Modal -->
+  <div id="qrScannerModal" class="qr-scanner-modal">
+    <div class="qr-scanner-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <h3 style="margin:0;font-size:20px;font-weight:700;color:#333">Scan QR Code</h3>
+        <button id="qrCloseBtn"
+          style="border:0;background:transparent;font-size:24px;cursor:pointer;color:#666">&times;</button>
+      </div>
+      <p style="margin:0 0 16px;color:#666;font-size:14px">Position the QR code within the frame to scan</p>
+
+      <div class="qr-overlay">
+        <video id="qrVideo" class="qr-video" autoplay muted playsinline></video>
+        <div class="qr-crosshair"></div>
+      </div>
+
+      <canvas id="qrCanvas" style="display:none"></canvas>
+
+      <div id="qrStatus"
+        style="margin-top:16px;padding:12px;border-radius:8px;background:#f5f5f5;color:#666;font-size:14px">
+        Initializing camera...
+      </div>
+
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:20px">
+        <button id="qrSwitchCamera" class="btn-secondary" style="padding:10px 16px">Switch Camera</button>
+        <button id="qrCancelBtn" class="btn-secondary" style="padding:10px 16px">Cancel</button>
+      </div>
+
+      <div class="qr-upload-section">
+        <h4 style="margin:0 0 10px;color:#333;font-size:18px">📷 Or Upload QR Photo</h4>
+        <p style="margin:0 0 15px;color:#666;font-size:14px">Select a photo containing QR code from your device</p>
+        <button class="photo-upload-btn" onclick="document.getElementById('photoFileInput').click()">
+          📁 Choose Photo
+        </button>
+        <input type="file" id="photoFileInput" accept="image/*" onchange="handlePhotoUpload(event)">
+        <div id="uploadStatus" class="upload-status"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPI PIN Modal (injected but hidden) -->
+  <div id="upiPinModal"
+    style="display:none;position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;z-index:9999">
+    <div id="upiPinBox"
+      style="width:520px;max-width:92%;background:#fff;border-radius:14px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,0.25)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <strong>Enter UPI PIN</strong>
+        <button id="upiPinClose" style="border:0;background:transparent;font-size:18px;cursor:pointer">&times;</button>
+      </div>
+      <p style="margin:0 0 12px;color:#333">Confirm with your 4-digit UPI PIN to authorize the payment.</p>
+      <input id="upiPinInput" type="password" inputmode="numeric" maxlength="6" placeholder="Enter UPI PIN"
+        style="width:100%;padding:14px;border-radius:10px;border:1px solid #eef6ff;margin-bottom:14px;font-size:18px;letter-spacing:4px" />
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button id="upiPinCancel" class="btn-secondary" type="button">Cancel</button>
+        <button id="upiPinConfirm" class="btn-primary" type="button">Confirm & Pay</button>
+        });
+        }
+
+        confirmBtn.addEventListener('click', onConfirm);
+        cancelBtn.addEventListener('click', onCancel);
+        closeBtn.addEventListener('click', onCancel);
+        }
+        </script>
+</body>
+
+</html>

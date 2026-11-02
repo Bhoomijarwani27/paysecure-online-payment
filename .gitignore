@@ -1,0 +1,24 @@
+# Secrets and local configuration
+.env
+account/info.php
+
+# Development files
+account/debug_*.php
+account/check_*.php
+account/fix_*.php
+account/test_*.php
+account/test_*.html
+account/migrate_*.php
+account/*_backup.*
+account/*.broken*
+account/mock_api.php
+account/demo_login.html
+account/css_test.html
+account/nav_test.html
+account/simple_test.html
+account/simple_pay_test.html
+
+# IDE/system files
+.vscode/
+.DS_Store
+Thumbs.db
